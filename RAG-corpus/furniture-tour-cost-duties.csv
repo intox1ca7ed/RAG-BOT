@@ -1,0 +1,28 @@
+field_id,field_label,notes
+duty_furniture_sitting_wood_frame,"Furniture for sitting at home – with a wooden frame (sofas, armchairs, ottomans, dining chairs)",Rate: $4.50 per 1 kg.
+duty_furniture_sitting_bamboo_rattan,Furniture for sitting at home – made of bamboo and rattan (sofas and armchairs),Rate: $4.50 per 1 kg.
+duty_furniture_sitting_rotating_adjustable,Furniture for sitting at home – with rotating and height-adjustable mechanism,Rate: $4.50 per 1 kg.
+duty_furniture_sitting_wicker_plastic_metal,Furniture for sitting at home – wicker plastic with metal frame,Rate: $3.50 per 1 kg.
+duty_other_furniture_kitchen_sets,Other household furniture (not for sitting) – kitchen sets,Rate: $2.50 per 1 kg.
+duty_other_furniture_wood_bedroom,Other household furniture – wooden bedroom furniture (bed set),Rate: $2.50 per 1 kg.
+duty_other_furniture_wood_dining_living,Other household furniture – wooden furniture for dining rooms and living rooms,Rate: $2.50 per 1 kg.
+duty_other_furniture_plastic_metal,Other household furniture – plastic and metal furniture,Rate: $2.50 per 1 kg.
+duty_other_furniture_bamboo_rattan_desks,"Other household furniture – bamboo and rattan furniture (desks, nightstands, cabinets)",Rate: $2.50 per 1 kg.
+duty_other_furniture_mattresses,Other household furniture – mattresses,Rate: $5.00 per 1 kg.
+duty_plumbing_bathtub_shower_cabin,Plumbing – regular acrylic bathtub with hydromassage; shower cabin (glass),Rate: $2.50 per 1 kg.
+duty_plumbing_faucets_shower_heads,"Plumbing – faucets, shower heads",Rate: $2.50 per 1 kg.
+duty_plumbing_toilets_sinks,"Plumbing – bidet, toilets, sinks",Rate: $1.00 per 1 kg.
+duty_plumbing_bathroom_furniture,Plumbing – bathroom furniture (plastic/wood with built-in sink),Rate: $2.50 per 1 kg.
+duty_plumbing_accessories,Plumbing – bathroom accessories,Rate: $5.00 per 1 kg.
+duty_finishing_parquet,Finishing materials – parquet flooring,"Rate: $1.50 per 1 kg. Note: certificate registration mentioned (20,000 RUB per batch)."
+duty_finishing_tiles_mosaic,"Finishing materials – tiles, porcelain stoneware, mosaics",Rate: $1.00 per 1 kg.
+duty_finishing_metal_entrance_doors,Finishing materials – metal entrance doors,Rate: $1.00 per 1 kg.
+duty_finishing_wood_interior_doors,Finishing materials – wooden interior doors,Rate: $2.00 per 1 kg.
+duty_lighting_fixtures,"Lighting fixtures – floor lamps, chandeliers, wall lamps, fixtures",Rate: $4.00 per 1 kg.
+duty_lighting_diode_lamps,Lighting fixtures – diode lamps,Rate: $3.50 per 1 kg.
+duty_misc_fireplace_electric,Misc – electric fireplace,Rate: $1.50 per 1 kg.
+duty_misc_textiles,"Misc – carpets, textiles (curtains, bedspreads, bed linen, etc.)",Rate: $6.00 per 1 kg.
+duty_misc_tableware_porcelain,"Misc – tableware, vases (porcelain)",Rate: $5.00 per 1 kg.
+duty_misc_stairs,"Misc – stairs (wood, metal)",Rate: $1.50 per 1 kg.
+duty_misc_electronics,"Misc – home appliances, electronics",Rate: $7.00 per 1 kg.
+duty_misc_watches_decor,"Misc – watches, decorative items",Rate: $6.30 per 1 kg.

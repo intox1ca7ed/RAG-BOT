@@ -1,0 +1,25 @@
+field_id,field_label,notes
+weight_single_bed_0_9_no_mattress,Single bed without mattress (0.9 m),Material: MDF/Chipboard/Wood. Net 60 kg; Gross 62 kg; Volume 0.2 m3.
+weight_single_bed_1_5_no_mattress,Single bed without mattress (1.5 m),Material: MDF/Chipboard/Wood. Net 90 kg; Gross 95 kg; Volume 0.4 m3.
+weight_double_bed_1_8_no_mattress,Double bed without mattress (1.8 m),Material: MDF/Chipboard/Wood. Net 100 kg; Gross 105 kg; Volume 0.5 m3.
+weight_spring_mattress_0_9x2,Spring mattress (0.9×2 m),Material: springs/foam rubber. Net 40 kg; Gross 41 kg; Volume 1.0 m3.
+weight_spring_mattress_1_5x2_v1,Spring mattress (1.5×2 m) – option 1,Material: springs/foam rubber. Net 45 kg; Gross 46 kg; Volume 1.2 m3.
+weight_spring_mattress_1_5x2_v2,Spring mattress (1.5×2 m) – option 2,Material: springs/foam rubber. Net 49 kg; Gross 50 kg; Volume 1.5 m3.
+weight_soft_corner_sofa,Soft corner sofa,Base: wood. Net 110 kg; Gross 120 kg; Volume 1.6–2.3 m3.
+weight_sofa_2_3_seater_plus_2_armchairs,2–3 seater sofa + 2 armchairs,Base: wood. Net 130–150 kg; Gross 140–155 kg; Volume 2.7–3.3 m3.
+weight_ottoman,Ottoman,Base: wood. Net 45 kg; Gross 50 kg; Volume 0.8 m3.
+weight_armchair,Armchair,Base: wood. Net 27–35 kg; Gross 35–40 kg; Volume 0.4–0.9 m3.
+weight_chair,Chair,Material: MDF/Wood. Net 4–6 kg; Gross 5–8 kg; Volume 0.1–1.0 m3.
+weight_upholstered_chair,Upholstered chair,Base: wood. Net 8–12 kg; Gross 10–15 kg; Volume 0.3–0.8 m3.
+weight_padded_stool,Padded stool,Base: wood. Net 4–8 kg; Gross 5–10 kg; Volume 0.05–0.08 m3.
+weight_rocking_chair,Rocking chair,Base: wood. Net 25–30 kg; Gross 30–35 kg; Volume 0.6 m3.
+weight_directors_chair,Director’s chair,Material: metal and plastic. Net 40–50 kg; Gross 45–60 kg; Volume 0.4–0.6 m3.
+weight_office_chair,Office chair,Material: metal and plastic. Net 15–20 kg; Gross 20–25 kg; Volume 0.1–0.15 m3.
+weight_rotating_chair,Rotating chair,Base material: metal. Net 5–13 kg; Gross 6–15 kg; Volume 0.05–0.1 m3.
+weight_barber_chair,Barber chair,Base material: metal. Net 20–25 kg; Gross 30–35 kg; Volume 0.2–0.3 m3.
+weight_chest_of_drawers_4_5,Chest of drawers (4–5 drawers),Material: MDF/wood. Net 45–55 kg; Gross 50–60 kg; Volume 0.4–0.6 m3.
+weight_bedside_table,Bedside table,Material: MDF/Chipboard/Wood. Net 10–20 kg; Gross 13–23 kg; Volume 0.09–0.15 m3.
+weight_tv_cabinet,TV cabinet,Material: MDF/Chipboard/Wood + glass. Net 50–70 kg; Gross 55–80 kg; Volume 0.15–1.0 m3.
+weight_coffee_table,Coffee table,Material: MDF/Wood. Net 15–20 kg; Gross 20–25 kg; Volume 0.1–0.15 m3.
+weight_glass_topped_coffee_table,Glass-topped coffee table,Material: MDF/Wood + glass. Net 60–70 kg; Gross 65–75 kg; Volume 0.15–0.25 m3.
+weight_marble_top_coffee_table,Coffee table with marble top,Material: MDF/Wood + marble. Net 70–90 kg; Gross 80–100 kg; Volume 0.2–0.3 m3.

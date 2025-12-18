@@ -1,0 +1,10 @@
+field_id,field_label,notes
+service_transfer,Transfer service,"Meeting/seeing off; Guangzhou airport ↔ hotel (one direction). Prices mentioned: $55, $75, $105 (varies by hotel city and vehicle type)."
+service_consultant_translator,Consultant / translator,Full-time translators with knowledge of language and furniture market. Price: $65.
+service_rent_car_driver,Rent a car (with driver),"Route: Hotel ↔ Furniture Center. Prices: $85 (passenger car), $125 (minivan). Other routes/business-class discussed on site."
+service_agency_fee,Agency fee,"Production control, warehouse visits, acceptance vs spec, packing list, logistics/consolidation. Price: 5% of purchase amount."
+service_quality_control,Quality control,Open factory packaging for visual inspection; photo report. Price: $30/m3 within Foshan city.
+service_cargo_delivery,Cargo delivery (within Foshan),"Delivery from suppliers to consolidation warehouse when suppliers don’t deliver free. Price: $15/m3, but not less than $45 per batch."
+service_additional_packaging,Additional packaging,Wooden crate: $70/m3; Plywood box: $100/m3.
+service_loader,Loader,Loading heavy/large cargo. Price: $20 per place.
+service_export_clearance,Export clearance,Container ordering/submission for loading; EXW→FOB export; documents (certificates etc.); port handling; bill of lading/telex release; port/customs fees. Price: $1100 per container.

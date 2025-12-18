@@ -1,0 +1,26 @@
+field_id,field_label,notes
+full_name_passport,Last name and first name,As in foreign passport.
+previous_last_name,Previous last name (if any),
+ru_internal_passport_details,Internal passport details (RF),"Number, date of issue, issued by whom/where, expiration date. Sensitive: collect via secure channel."
+marital_status,Marital status,
+planned_trip_dates,Date of the planned trip,Start date (and optionally end date).
+planned_trip_duration,Duration of planned trip,Number of days.
+visa_category,Category of visa requested,Tourist single entry up to 15 days of stay (as stated on form).
+home_address_registration,Detailed home address,By registration.
+mobile_phone,Mobile phone,
+work_study_info,Place of work / study,"Organization name, position, address, phone."
+criminal_record,Criminal record,Indicate Yes/No (and details if required).
+ever_deported,Have you ever been deported from any country?,"Yes/No; if yes, specify country and date."
+doc_foreign_passport,Document: Foreign passport,Valid for at least 3 months after visa validity end.
+doc_other_passports,Document: Other passports,Second valid passport and old canceled foreign passport (if any).
+doc_internal_passport_copy,Document: Internal passport copy,Photo page + registration form.
+doc_photos_2,Document: Photos (2 pcs),"Color, white background, 4.5×4.5 cm, no headdress, ~80% face."
+doc_work_certificate,Document: Work certificate,"Position + salary (preferably from 30,000 RUB)."
+doc_flight_hotel_booking,Document: Flight ticket & hotel booking,
+doc_bank_statement,Document: Bank statement,"At least 90,000 RUB."
+doc_children_birth_certificate,For children: Birth certificate copy,
+doc_children_school_certificate,For children: Certificate from educational institution,
+doc_children_travel_consent,For children: Travel consent,Notarized if traveling without parents or with one parent.
+doc_parent_internal_passport_copy,For children: Parent internal passport copy,Photo page + registration.
+doc_sponsor_work_certificate,For children: Sponsor work certificate,"Position + salary (preferably from 30,000 RUB)."
+doc_sponsorship_letter,For children: Sponsorship letter,Free-form.

@@ -1,0 +1,13 @@
+field_id,field_label,notes
+cn_legalization_standard_general_docs,"China document legalization – standard documents (e.g., no-criminal-record cert, diploma without appendix, marriage/birth/death certificates, statutes, workbooks)","Registration deadline: 7 working days. Price: 18,000 RUB per document. Price includes Chinese translation + notarization; submission to Ministry of Justice, Ministry of Foreign Affairs, and Chinese Embassy Consular Dept; consular fee. Courier delivery not included."
+cn_legalization_express_general_docs,China document legalization – standard documents (same group) – urgent,"Registration deadline: 3 working days. Price: 28,000 RUB per document. Same inclusions as standard. Courier delivery not included."
+cn_legalization_standard_id_docs,"China document legalization – ID documents (foreign passport, driver’s license, military ID card)","Registration deadline: 7 working days. Price: 18,000 RUB per document. Requires notarized copy. Includes translation + notarization and all submission/consular fees."
+cn_legalization_express_id_docs,"China document legalization – ID documents (foreign passport, driver’s license, military ID card) – urgent","Registration deadline: 3 working days. Price: 28,000 RUB per document. Requires notarized copy. Includes translation + notarization and all submission/consular fees."
+cn_legalization_diploma_with_appendix,China document legalization – diploma with appendix,Processing time and price: on request.
+cn_legalization_required_copies,China legalization – required copies,"Copies of foreign passport(s) + Russian internal passport (photo page + registration) for all persons mentioned in the document (e.g., spouses for a marriage certificate)."
+uae_legalization_private_standard,UAE document legalization – private documents (standard),"Registration deadline: 12 working days. Price: 13,000 RUB."
+uae_legalization_private_fast,UAE document legalization – private documents (faster),"Registration deadline: 8 working days. Price: 14,000 RUB."
+uae_legalization_private_express,UAE document legalization – private documents (urgent),"Registration deadline: 4 working days. Price: 19,000 RUB."
+uae_legalization_commercial_standard,UAE document legalization – commercial documents (standard),"Registration deadline: 12 working days. Price: 44,000 RUB."
+uae_legalization_commercial_fast,UAE document legalization – commercial documents (faster),"Registration deadline: 8 working days. Price: 45,000 RUB."
+uae_legalization_commercial_express,UAE document legalization – commercial documents (urgent),"Registration deadline: 4 working days. Price: 50,000 RUB."

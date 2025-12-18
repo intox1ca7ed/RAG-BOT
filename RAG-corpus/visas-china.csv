@@ -1,0 +1,17 @@
+field_id,field_label,notes
+china_visa_business_M_single,China business visa (M) – single entry,"Cost: 12,000 RUB. Documents mentioned: invitation, company license, work certificate."
+china_visa_business_M_double,China business visa (M) – double entry,"Cost: 16,000 RUB. Documents mentioned: invitation, company license, work certificate."
+china_visa_business_M_annual_multiple,China business visa (M) – annual multiple entry,"Cost: 22,000 RUB. Documents mentioned: invitation, company license, work certificate."
+china_visa_business_M_two_year_multiple,China business visa (M) – two-year multiple entry,Listed as an option; price not clearly specified in the PDF snapshot (treat as 'on request').
+china_visa_tourism_L_single,China tourist visa (L) – single entry,"Cost: 12,000 RUB (one-time payment)."
+china_visa_tourism_L_double,China tourist visa (L) – double entry,"Cost: 16,000 RUB (two-time payment)."
+china_visa_family_Q_S,China family visas (Q1/Q2/S1/S2),Cost depends on visa type (listed as 'depending on the type of visa').
+china_visa_work_Z,China work visa (Z),Cost depends on visa type (listed as 'depending on the type of visa'). Note: Z visa is needed to work in China.
+china_visa_study_X,China study visa (X1/X2),Cost depends on visa type (listed as 'depending on the type of visa').
+china_processing_times,Processing times (China visas),Regular mode: 10–12 business days. Urgent mode: 5–7 business days. Express: upon agreement.
+china_payment_policy,Payment policy,Payment upon visa readiness. Consular fee included in the price.
+china_presence_policy,Applicant presence at consulate,Application is impersonal and does not require personal presence at the Consulate.
+china_basic_docs,Basic required documents (minimum mentioned),Foreign passport; color photo in electronic format; questionnaire (can be filled out at the office).
+china_delivery_options,Document delivery options,"If you cannot come in person: courier delivery (CDEK) or airline envelope services (e.g., S7 'Flying Envelope', Ural Airlines mentioned)."
+china_consulate_hours,Chinese Consulate in Ekaterinburg – hours (as stated),Open 4 times a week from 9:30 to 12:00 (local time).
+china_cancellation_policy,After submission: cancellation / passport return,"After documents are submitted to the Consulate, it is not possible to cancel the application or return the passport before the issue date."

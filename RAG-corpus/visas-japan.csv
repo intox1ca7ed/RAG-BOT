@@ -1,0 +1,11 @@
+field_id,field_label,notes
+japan_visa_tourist_single_15,Japan tourist visa – single entry (up to 15 days stay),"Cost: 6,000 RUB. Processing time: 10–12 business days."
+jp_doc_passport,Required: foreign passport(s),Passport valid at least 3 months after visa expiry; provide current passport + second valid passport and old cancelled passports (if any).
+jp_doc_internal_passport_copy,Required: copy of internal passport,Photo page + registration address page.
+jp_doc_photos,Required: photos,"2 color photos on white background, 4.5×4.5 cm, no hat; face should cover ~80% of photo."
+jp_doc_questionnaire,Required: completed questionnaire,Questionnaire must be completed (download link referenced in the PDF).
+jp_doc_work_reference,Required: work reference,"From employer, stating position and salary (preferably from 30,000 RUB)."
+jp_doc_tickets_hotels,Required: travel bookings,Air tickets and hotel reservations.
+jp_doc_bank_statement,Required: bank statement,"At least 90,000 RUB."
+jp_children_additional,For children (additional documents),"Birth certificate copy; school/university certificate; notarized consent to travel if not with both parents + copy of parent’s internal passport; sponsor work certificate (salary preferably ≥30,000 RUB); free-form sponsorship letter."
+jp_consulate_delay_note,Note,The Consulate has the right to delay issuance of completed documents.

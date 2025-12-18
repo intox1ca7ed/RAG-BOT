@@ -1,0 +1,33 @@
+field_id,field_label,notes
+full_name,Name and Surname,Full name (Latin as in passport if required).
+dob_place_of_birth,Date of birth and place of birth,Use DD/MM/YYYY; include city/region/country.
+ru_internal_passport_number,Russian passport number,"Sensitive: collect via secure channel / handoff, not in Telegram chat."
+visa_category,Category of visa requested,Tourism / business / family / study.
+estimated_arrival_date,Estimated date of arrival in China,Date.
+stay_duration_days,Duration of stay (days),Integer.
+employment_start_date,Current work: start date,DD/MM/YYYY.
+employment_end_date,Current work: end date (if any),Leave blank if ongoing.
+employer_name,Current work: organization name,
+employer_address,Current work: organization address,
+employer_phone,Current work: organization phone number,
+manager_name,Current work: manager's name,
+last_education,Last completed education,Institution + academic degree.
+residence_address,Residential address,"Country, region, city/locality, street, house, apartment; include home phone if any."
+contact_mobile,Cell phone,Required.
+contact_email,Email address,Required.
+spouse_info,Information about spouse,"Full name, citizenship, profession, DOB, POB, residence address (if applicable)."
+father_info,Father (if alive),"Full name, DOB, citizenship."
+mother_info,Mother (if alive),"Full name, DOB, citizenship."
+children_info,Children (if any),"Full name, DOB, citizenship (list)."
+china_stay_location,Place of stay in China,"District, city, province."
+inviting_party_name,Inviting party in China: organization full name,
+inviting_party_phone_city,"Inviting party phone (city, not cell)",Landline preferred.
+inviting_party_email,Inviting party email,
+inviting_party_address,Inviting party address,"District, city, province."
+emergency_contact,Emergency contact person,"Full name, relation, phone number."
+ever_been_to_china,Have you ever been to China?,Yes/No.
+ever_issued_china_visa,Have you ever been issued a visa to China before?,If yes: issue city + issue date.
+fingerprints_taken_consulate,Were your fingerprints taken at a consulate/embassy (not at the airport)?,Yes/No.
+other_valid_visas,Do you have valid visas to other countries?,List countries/visa types and validity if known.
+visited_countries_last_12_months,Have you visited other countries in the last 12 months?,List countries (based on the passport used for the China visa).
+spent_30_days_turkey,Have you ever spent more than 30 days in Turkey (continuous)?,Yes/No.

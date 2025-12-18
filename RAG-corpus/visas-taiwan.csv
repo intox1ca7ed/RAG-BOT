@@ -1,0 +1,17 @@
+field_id,field_label,notes
+tw_visa_free_notice,Taiwan visa-free regime (historical note),"Visa-free entry for Russian citizens stated from Sep 6, 2018 to Jul 31, 2019; stay up to 14 days."
+tw_visa_free_requirements,Visa-free entry requirements (as stated),Valid passport older than 6 months; hotel reservation; work certificate in English.
+tw_processing_time,Processing time (Taiwan visas),Up to 10 business days.
+tw_registration_period,Registration period (Taiwan visas),Up to 6 business days.
+tw_single_entry_30_3m_standard,"Taiwan visa – single entry, 30 days stay, corridor 3 months (standard)","Cost: 8,500 RUB."
+tw_single_entry_30_3m_urgent,"Taiwan visa – single entry, 30 days stay, corridor 3 months (urgent)","Cost: 10,000 RUB."
+tw_multiple_entry_30_12m_standard,"Taiwan visa – multiple entry, 30 days per entry, corridor 12 months (standard)","Cost: 13,000 RUB."
+tw_multiple_entry_30_12m_urgent,"Taiwan visa – multiple entry, 30 days per entry, corridor 12 months (urgent)","Cost: 16,000 RUB."
+tw_doc_passport,Required: international passport,Valid for at least 6 months.
+tw_doc_photos,Required: photos,"2 color photos on white background, 3.5×4.5 cm, no older than 3 months."
+tw_doc_questionnaire,Required: questionnaire,Questionnaire must be completed (download link referenced in the PDF).
+tw_doc_internal_passport_copy,Required: copy of internal passport,Photo page + registration page.
+tw_doc_employment_certificate,Required: employment certificate,On company letterhead; position and salary; certified by seal and head’s signature.
+tw_doc_bank_certificate,Required: bank statement / bank certificate,Bank proof required (exact minimum not specified in this PDF snapshot).
+tw_doc_invitation_or_bookings,Required: invitation or bookings,Invitation; if no invitation then hotel + flight reservations.
+tw_doc_inviting_company_head_id,If applying by invitation (additional),Copy of the ID of the head of the inviting company.

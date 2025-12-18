@@ -1,0 +1,22 @@
+field_id,field_label,notes
+full_name_ru,Full name in Russian,
+previous_surname,Previous surname (if any),
+ru_internal_passport_number,Internal passport number (RF),Sensitive: collect via secure channel.
+marital_status,Marital status,
+spouse_full_name,Spouse full name,If applicable.
+spouse_dob,Spouse date of birth,If applicable.
+planned_trip_date,Date of planned trip,
+visa_entry_type,Category of visa requested,Single-entry or multiple-entry.
+processing_speed,Visa processing period,Normal (up to 10 business days) or urgent (up to 6 business days).
+home_address_registration,Detailed home address,By registration.
+mobile_phone,Mobile phone,
+work_study_info,Place of work/study,"Organization name, position, address, phone number."
+father_info,Close family member: Father,"Full name, DOB, profession."
+mother_info,Close family member: Mother,"Full name, DOB, profession."
+doc_international_passport,Document: International passport,Valid for at least 6 months.
+doc_photos_2,Document: Photos (2),"Color on white background, 3×4 or 3.5×4.5, taken within last 3 months."
+doc_internal_passport_copy,Document: Internal passport copy,Photo page + registration form.
+doc_work_certificate,Document: Work certificate,Position and salary; on letterhead; sealed/signed.
+doc_bank_info,Document: Bank information,Statement / proof of funds.
+doc_invitation_or_bookings,Document: Invitation or bookings,"Invitation; if none, hotel + air tickets booking."
+doc_inviting_party_manager_id,Document: Inviting party manager ID copy,If applying by invitation.

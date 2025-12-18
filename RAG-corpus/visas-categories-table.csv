@@ -1,0 +1,17 @@
+field_id,field_label,notes
+visa_L,L (tourist visa),Issued to foreign citizens for tourist trips.
+visa_M,M (business visa),"Issued to foreign citizens who come to the PRC for business negotiations and meetings with Chinese contractors, exhibitions, and other purposes related to doing business with Chinese partners."
+visa_C,C (crew member visa),"Issued to crew members of air and sea vessels, and crew members of international train crews, as well as to drivers of motor vehicles engaged in international road transport."
+visa_D,D (permanent residence),Issued to foreign citizens who have obtained permanent residence in the PRC.
+visa_F,F (social visit),Issued to foreign citizens for visiting the PRC for scientific or cultural exchange purposes.
+visa_G,G (transit visa),"Issued in case of transit through the territory of the PRC by air, sea, or land transport."
+visa_J1,J1 (long-term journalist visa),Issued to journalists from foreign news agencies and other media outlets accredited in China.
+visa_J2,J2 (short-term journalist visa),Issued to relatives of Chinese citizens and foreign citizens who have the right to permanent residence in the PRC for long-term (more than 180 days) stay in the PRC.
+visa_Q1,Q1 (long-term visit to relatives),For relatives visiting China for an extended period (180 days or more).
+visa_Q2,Q2 (short-term visit to relatives),For relatives visiting China for a short period (up to 180 days).
+visa_R,R (specialist visa),It is issued to foreign highly qualified and rare specialists who are of interest to the state.
+visa_S1,S1 (long-term visa for a private visit),"Issued to the closest relatives (spouse, children, and parents) of a foreign citizen who is in China for work or study, for long-term stay in China."
+visa_S2,S2 (short-term visa for a private visit),"It is issued to the closest relatives of a foreign citizen who is in China for work or study, for short-term stays in China, as well as to foreign citizens who enter China for personal matters (such as medical treatment, inheritance, guardianship, etc.)."
+visa_X1,X1 (long-term study visa),Issued to foreign citizens for long-term (180 days or more) study in China.
+visa_X2,X2 (short-term study visa),Issued to foreign citizens for short-term studies in China.
+visa_Z,Z (work visa),Issued to foreign citizens entering the PRC for work purposes.
