@@ -1,0 +1,9 @@
+# Required
+numpy
+python-dotenv
+
+# Optional extras (install as needed)
+# sentence-transformers
+# faiss-cpu
+# scikit-learn
+# openai

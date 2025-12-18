@@ -5,13 +5,8 @@
     "local_path": "RAG-corpus/cargo-customs-clearance.txt",
     "source_url": "https://www.visavisa.info/delivery_goods/kontejnery/",
     "doc_type": "txt",
-    "tags": "cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "cargo",
-    "section": "general"
+    "tags": "customs,clearance,cargo customs,customs clearance",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_cargo_forwarding_txt",
@@ -19,13 +14,8 @@
     "local_path": "RAG-corpus/cargo-forwarding.txt",
     "source_url": "https://www.visavisa.info/delivery_goods/expedirovanie/",
     "doc_type": "txt",
-    "tags": "cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "cargo",
-    "section": "general"
+    "tags": "cargo,forwarding",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_cargo_product_certification_txt",
@@ -33,13 +23,8 @@
     "local_path": "RAG-corpus/cargo-product-certification.txt",
     "source_url": "https://www.visavisa.info/delivery_goods/sertifikaciya_produkcii/",
     "doc_type": "txt",
-    "tags": "cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "cargo",
-    "section": "general"
+    "tags": "cargo,certification",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_cargo_txt",
@@ -48,12 +33,7 @@
     "source_url": "https://www.visavisa.info/delivery_goods/",
     "doc_type": "txt",
     "tags": "cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "cargo",
-    "section": "general"
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_consulate_faq_txt",
@@ -61,13 +41,8 @@
     "local_path": "RAG-corpus/consulate-FAQ.txt",
     "source_url": "https://docs.yandex.ru/docs/view?url=ya-browser%3A%2F%2F4DT1uXEPRrJRXlUFoewruPC7a7JVLDw9f4mvKVOCOeFPqy1QFCS3ESZTwG3O7fJgDuGyLIpLFYcoAS1OAh6pnmNsX71-3OtdLW-FCZuF-DoBPl9N3MnVHcvw_bO1-re3jpEtrJ_MP_4w7SuF15YAAA%3D%3D%3Fsign%3D5KoSzlSp-SWJ_tyeih_riULN3ivmKENfKWUpWQ1-Zk8%3D&name=P020230505816553560397.doc&nosw=1",
     "doc_type": "txt",
-    "tags": "consulate,faq,china",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "consulate",
-    "section": "faq"
+    "tags": "consulate,faq",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_consulate_contacts_txt",
@@ -75,13 +50,8 @@
     "local_path": "RAG-corpus/consulate-contacts.txt",
     "source_url": "https://ekaterinburg.china-consulate.gov.cn/rus/lxwmx/200912/t20091207_4071395.htm",
     "doc_type": "txt",
-    "tags": "contact,consulate,hours,china",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "contact",
-    "section": "hours"
+    "tags": "consulate,contacts,mail,email,opening hours,adress,contact",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_contacts_txt",
@@ -89,13 +59,8 @@
     "local_path": "RAG-corpus/contacts.txt",
     "source_url": "https://www.visavisa.info/contact/",
     "doc_type": "txt",
-    "tags": "contact,hours,locations",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "contact",
-    "section": "hours"
+    "tags": "contact,contacts,adress,links,email,mail,phone number,opening hours,legal information",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_form_china_csv",
@@ -104,12 +69,7 @@
     "source_url": "https://docs.yandex.ru/docs/view?url=ya-browser%3A%2F%2F4DT1uXEPRrJRXlUFoewruFCWcNMqYwp8wdCfOBn7v-ynWxfbj0a8P777HmN-xR-870-HaSh4yfMzPNU0U9SuS12zahm3oYs-XwcD-unyZ-fKb1cPxz-xrmqMkZ7EXpE5FAi2mAp08DBMAV2c5T3edg%3D%3D%3Fsign%3DJJaeMRBREHXQWoGbiRchFyOstw1k56m_YNaBEvT-z1M%3D&name=Oprosnyi%20list%20China%202025.docx&nosw=1",
     "doc_type": "csv",
     "tags": "china,form",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "form",
-    "section": "general"
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_form_japan_csv",
@@ -118,12 +78,7 @@
     "source_url": "https://docs.yandex.ru/docs/view?url=ya-browser%3A%2F%2F4DT1uXEPRrJRXlUFoewruDyB_7HfaNGXeP7BN_sSryF1dnjMNMuNyp6TG11PFurJFnsRcxTsWuPTfyTNG4_brRxtgUAZ29_iwF1Plo011dtzM5ee0FGrZvMWwLPBVghJKPvkVMSfZs74Ps-QfRvjbQ%3D%3D%3Fsign%3Dc7E2m5RJaOHJJIttA89gcMp68S5Xu-gLwFIxej2_7TE%3D&name=Oprosnyi_list_Japan.doc&nosw=1",
     "doc_type": "csv",
     "tags": "japan,form",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "japan",
-    "topic": "form",
-    "section": "general"
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_form_taiwan_csv",
@@ -132,12 +87,7 @@
     "source_url": "https://docs.yandex.ru/docs/view?url=ya-browser%3A%2F%2F4DT1uXEPRrJRXlUFoewruAeqWUlf-HjmhqZtnjJU0chMxqxlMqwBYIaPp2NUVTDVFky_upkaX6Uj610qz54ggOR1Dv-qeElsEYyRgBLgliXT9jS8JpHw2O4zpDmCHWblzh5g2W8Z9aKkgg80ACP8MA%3D%3D%3Fsign%3DscKwtoCtnX_6AiYlHqj-YWG0lxheoMREy89glyomNr4%3D&name=Oprosnyi_list_Taiwan.doc&nosw=1",
     "doc_type": "csv",
     "tags": "taiwan,form",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "taiwan",
-    "topic": "form",
-    "section": "general"
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_faq_txt",
@@ -145,13 +95,8 @@
     "local_path": "RAG-corpus/furniture-tour-FAQ.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/vopros-otvet/",
     "doc_type": "txt",
-    "tags": "china,furniture,faq",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "faq"
+    "tags": "furniture,tour,furniture tour,furniture china tour, faq",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_cost_duties_csv",
@@ -159,13 +104,8 @@
     "local_path": "RAG-corpus/furniture-tour-cost-duties.csv",
     "source_url": "https://www.visavisa.info/furniture_tours/oplata_tovarov/stavki_tamozhennih_poshlin/",
     "doc_type": "csv",
-    "tags": "china,furniture,prices",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "prices"
+    "tags": "furniture,tour,furniture tour,furniture china tour,duties",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_cost_table_csv",
@@ -173,13 +113,8 @@
     "local_path": "RAG-corpus/furniture-tour-cost-table.csv",
     "source_url": "https://www.visavisa.info/furniture_tours/oplata_tovarov/our-price/",
     "doc_type": "csv",
-    "tags": "china,furniture,prices",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "prices"
+    "tags": "furniture,tour,furniture tour,furniture china tour,cost",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_cost_txt",
@@ -187,13 +122,8 @@
     "local_path": "RAG-corpus/furniture-tour-cost.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/oplata_tovarov/",
     "doc_type": "txt",
-    "tags": "china,furniture,prices",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "prices"
+    "tags": "furniture,tour,furniture tour,furniture china tour, cost",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_delivery_containers_txt",
@@ -201,13 +131,8 @@
     "local_path": "RAG-corpus/furniture-tour-delivery-containers.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/dostavka_tamozhnya/kontejnery/",
     "doc_type": "txt",
-    "tags": "china,furniture,cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "general"
+    "tags": "furniture,tour,furniture tour,furniture china tour,containers",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_delivery_weights_csv",
@@ -215,13 +140,8 @@
     "local_path": "RAG-corpus/furniture-tour-delivery-weights.csv",
     "source_url": "https://www.visavisa.info/furniture_tours/dostavka_tamozhnya/Primernyj_ves_razlichnyh_tipov/",
     "doc_type": "csv",
-    "tags": "china,furniture,cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "general"
+    "tags": "furniture,tour,furniture tour,furniture china tour,delivery, delivery weights",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_delivery_txt",
@@ -229,13 +149,8 @@
     "local_path": "RAG-corpus/furniture-tour-delivery.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/dostavka_tamozhnya/",
     "doc_type": "txt",
-    "tags": "china,furniture,cargo",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "general"
+    "tags": "furniture,tour,furniture tour,furniture china tour,delivery",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_how_txt",
@@ -243,13 +158,8 @@
     "local_path": "RAG-corpus/furniture-tour-how.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/kak_eto_proishodit/",
     "doc_type": "txt",
-    "tags": "china,furniture",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "general"
+    "tags": "furniture,tour,furniture tour,furniture china tour",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_places_csv",
@@ -257,13 +167,8 @@
     "local_path": "RAG-corpus/furniture-tour-places.csv",
     "source_url": "https://www.visavisa.info/furniture_tours/all_about/gde_naity/",
     "doc_type": "csv",
-    "tags": "china,furniture,locations",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "locations"
+    "tags": "furniture,tour,furniture tour,furniture china tour,locations",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_production_china_txt",
@@ -271,13 +176,8 @@
     "local_path": "RAG-corpus/furniture-tour-production-china.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/all_about/proizvodstvo_mebeli/",
     "doc_type": "txt",
-    "tags": "china,furniture",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "general"
+    "tags": "china,furniture,production,furniture production in china",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_furniture_tour_txt",
@@ -285,13 +185,8 @@
     "local_path": "RAG-corpus/furniture-tour.txt",
     "source_url": "https://www.visavisa.info/furniture_tours/dlya-kogo-etot-tur/",
     "doc_type": "txt",
-    "tags": "china,furniture",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "furniture",
-    "section": "general"
+    "tags": "furniture,tour,furniture tour,furniture china tour",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_legalization_china_uae_csv",
@@ -299,13 +194,8 @@
     "local_path": "RAG-corpus/legalization-china-uae.csv",
     "source_url": "https://www.visavisa.info/konsulskaya-legalizatsiya/",
     "doc_type": "csv",
-    "tags": "china,legalization",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "legalization",
-    "section": "general"
+    "tags": "china,legalization,uae,china legalization,uae legalization",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_main_page_txt",
@@ -313,13 +203,8 @@
     "local_path": "RAG-corpus/main-page.txt",
     "source_url": "https://www.visavisa.info/",
     "doc_type": "txt",
-    "tags": "general,information",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "general",
-    "section": "general"
+    "tags": "main webpage,starting page,main page",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_personal_data_consent_txt",
@@ -327,13 +212,8 @@
     "local_path": "RAG-corpus/personal-data-consent.txt",
     "source_url": "https://www.visavisa.info/info/processing_noindex/",
     "doc_type": "txt",
-    "tags": "general",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "general",
-    "section": "general"
+    "tags": "personal data consent,data consent",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_visas_categories_table_csv",
@@ -341,13 +221,8 @@
     "local_path": "RAG-corpus/visas-categories-table.csv",
     "source_url": "https://www.visavisa.info/visa/kategorii/",
     "doc_type": "csv",
-    "tags": "visa,china",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "visa",
-    "section": "general"
+    "tags": "visa categories,visas,visa,visa types",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_visas_categories_txt",
@@ -355,13 +230,8 @@
     "local_path": "RAG-corpus/visas-categories.txt",
     "source_url": "https://www.visavisa.info/visa/kategorii/",
     "doc_type": "txt",
-    "tags": "visa,china",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "none",
-    "topic": "visa",
-    "section": "general"
+    "tags": "visa categories,visas,visa,visa types",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_visas_china_csv",
@@ -369,13 +239,8 @@
     "local_path": "RAG-corpus/visas-china.csv",
     "source_url": "https://www.visavisa.info/visa/",
     "doc_type": "csv",
-    "tags": "china,visa",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "china",
-    "topic": "visa",
-    "section": "general"
+    "tags": "visa,china,visa to china,china visa",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_visas_japan_csv",
@@ -383,13 +248,8 @@
     "local_path": "RAG-corpus/visas-japan.csv",
     "source_url": "https://www.visavisa.info/visa/japan/",
     "doc_type": "csv",
-    "tags": "japan,visa",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "japan",
-    "topic": "visa",
-    "section": "general"
+    "tags": "visa,japan,visa to japan,japan visa",
+    "collected_at": "2025-12-18"
   },
   {
     "doc_id": "rag_corpus_visas_taiwan_csv",
@@ -397,12 +257,7 @@
     "local_path": "RAG-corpus/visas-taiwan.csv",
     "source_url": "https://www.visavisa.info/visa/taiwan/",
     "doc_type": "csv",
-    "tags": "taiwan,visa",
-    "collected_at": "2025-12-18",
-    "language": "",
-    "translation": "",
-    "country": "taiwan",
-    "topic": "visa",
-    "section": "general"
+    "tags": "visa,taiwan,visa to taiwan,taiwan visa",
+    "collected_at": "2025-12-18"
   }
 ]

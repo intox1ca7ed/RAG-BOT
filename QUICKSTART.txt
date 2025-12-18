@@ -1,0 +1,17 @@
+Quickstart
+-----------
+1) Install deps:
+   pip install -r requirements.txt
+
+2) Build the index (uses manifest.csv/manifest.json and RAG-corpus/; skips pdf-raw):
+   python scripts/build_index.py --rebuild
+
+3) Ask a question:
+   python scripts/ask.py --question "What visas are needed?"
+   Add --show_context to view retrieved chunks. Add --no_llm to skip OpenAI.
+
+4) Optional LLM answers:
+   set OPENAI_API_KEY=your_key_here
+   (answers will be grounded on retrieved context; otherwise an extractive answer is returned)
+
+
