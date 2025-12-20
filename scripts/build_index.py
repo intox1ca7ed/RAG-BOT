@@ -22,6 +22,8 @@ from rag_core.manifest import load_manifest
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger("build_index")
 
+# NOTE: Embeddings tuning: supports backend auto/local/tfidf with optional sentence-transformers model.
+# Writes metadata used for downstream routing/refusal/debug; chunk ordering matches embeddings.npy/vectors.npy.
 
 def write_chunks_jsonl(chunks: List[dict], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -38,6 +40,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rebuild", action="store_true", help="Force rebuild even if index exists.")
     parser.add_argument("--chunk_size", type=int, default=DEFAULT_CONFIG.chunk_size)
     parser.add_argument("--chunk_overlap", type=int, default=DEFAULT_CONFIG.chunk_overlap)
+    parser.add_argument(
+        "--backend",
+        choices=["auto", "local", "tfidf"],
+        default="auto",
+        help="Embedding backend: auto prefers sentence-transformers if installed.",
+    )
+    parser.add_argument(
+        "--st_model",
+        default="all-MiniLM-L6-v2",
+        help="Sentence-transformers model name (when backend local/auto and available).",
+    )
     return parser.parse_args()
 
 
@@ -70,7 +83,12 @@ def main() -> None:
     logger.info("Created %d chunks", len(chunks))
 
     logger.info("Embedding chunks")
-    embed_model = EmbeddingModel()
+    prefer = None
+    if args.backend == "local":
+        prefer = "sentence-transformers"
+    elif args.backend == "tfidf":
+        prefer = "tfidf"
+    embed_model = EmbeddingModel(prefer=prefer, model_name=args.st_model)
     vectors = embed_model.fit([c["text"] for c in chunks])
     if vectors.size == 0:
         raise SystemExit("No vectors produced; check input corpus.")
@@ -82,7 +100,15 @@ def main() -> None:
 
     meta_vectorizer_path = index_dir / vectorizer_path if vectorizer_path else None
     index_store = IndexStore.build(
-        vectors, chunks, embed_model.to_metadata(vectorizer_path=meta_vectorizer_path)
+        vectors,
+        chunks,
+        embed_model.to_metadata(vectorizer_path=meta_vectorizer_path),
+        meta_info={
+            "chunk_size": cfg.chunk_size,
+            "chunk_overlap": cfg.chunk_overlap,
+            "backend_requested": args.backend,
+            "st_model": args.st_model,
+        },
     )
     logger.info("Saving index to %s", index_dir)
     index_store.save(index_dir)

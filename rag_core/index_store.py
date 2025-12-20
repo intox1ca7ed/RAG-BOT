@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import json
 import logging
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable, List, Tuple
+from typing import List, Tuple
 
 import numpy as np
 
@@ -49,12 +50,22 @@ class IndexStore:
         backend: str,
         embedding_meta: EmbeddingMetadata,
         faiss_index: object | None = None,
+        meta_info: dict | None = None,
     ):
         self.vectors = vectors.astype(np.float32)
         self.chunks = chunks
         self.backend = backend
         self.embedding_meta = embedding_meta
         self.faiss_index = faiss_index
+        self.meta_info = meta_info or {}
+
+    @staticmethod
+    def _l2_normalize(vectors: np.ndarray) -> np.ndarray:
+        if vectors.size == 0:
+            return vectors.astype(np.float32)
+        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        norms[norms == 0] = 1.0
+        return (vectors / norms).astype(np.float32)
 
     @classmethod
     def build(
@@ -62,11 +73,12 @@ class IndexStore:
         embeddings: np.ndarray,
         chunks: List[dict],
         embedding_meta: EmbeddingMetadata,
+        meta_info: dict | None = None,
     ) -> "IndexStore":
         faiss = _try_import_faiss()
         backend = "numpy"
         faiss_index = None
-        vectors = embeddings.astype(np.float32)
+        vectors = cls._l2_normalize(embeddings)
         if faiss is not None:
             try:
                 dim = vectors.shape[1]
@@ -77,14 +89,16 @@ class IndexStore:
                 logger.info("Using FAISS index backend.")
             except Exception as exc:
                 logger.warning("FAISS unavailable, falling back to numpy: %s", exc)
-        return cls(vectors, chunks, backend, embedding_meta, faiss_index)
+        return cls(vectors, chunks, backend, embedding_meta, faiss_index, meta_info)
 
     def save(self, index_dir: Path) -> None:
         index_dir.mkdir(parents=True, exist_ok=True)
         vectors_path = index_dir / "vectors.npy"
+        embeddings_path = index_dir / "embeddings.npy"
         meta_path = index_dir / "metadata.json"
         chunks_path = index_dir / "chunks_meta.json"
         np.save(vectors_path, self.vectors)
+        np.save(embeddings_path, self.vectors)
         with chunks_path.open("w", encoding="utf-8") as f:
             json.dump(self.chunks, f, ensure_ascii=False, indent=2)
         if self.backend == "faiss" and self.faiss_index is not None:
@@ -97,12 +111,14 @@ class IndexStore:
             "chunk_count": len(self.chunks),
             "dim": int(self.vectors.shape[1]) if self.vectors.size else 0,
             "sklearn_version": _get_sklearn_version() if self.embedding_meta.backend == "tfidf" else None,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            **(self.meta_info or {}),
         }
         with meta_path.open("w", encoding="utf-8") as f:
             json.dump(meta, f, indent=2)
 
     @classmethod
-    def load(cls, index_dir: Path, rebuild_on_mismatch: bool = False) -> Tuple["IndexStore", EmbeddingModel]:
+    def load(cls, index_dir: Path, rebuild_on_mismatch: bool = False) -> Tuple["IndexStore", EmbeddingModel, dict]:
         vectors_path = index_dir / "vectors.npy"
         meta_path = index_dir / "metadata.json"
         legacy_meta_path = index_dir / "index_meta.json"
@@ -114,7 +130,7 @@ class IndexStore:
         if not meta_path.exists() and legacy_meta_path.exists():
             meta_path = legacy_meta_path
 
-        vectors = np.load(vectors_path)
+        vectors = cls._l2_normalize(np.load(vectors_path))
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
         chunks = json.loads(chunks_path.read_text(encoding="utf-8"))
         embedding_meta = EmbeddingMetadata(**meta["embedding"])
@@ -146,8 +162,9 @@ class IndexStore:
             backend=meta.get("backend", "numpy"),
             embedding_meta=embedding_meta,
             faiss_index=faiss_index,
+            meta_info=meta,
         )
-        return store, embedding_model
+        return store, embedding_model, meta
 
     def search(self, query_vector: np.ndarray, top_k: int) -> List[Tuple[dict, float]]:
         if query_vector.ndim == 1:

@@ -4,7 +4,7 @@ import logging
 import pickle
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, List
+from typing import Iterable, List
 
 import numpy as np
 
@@ -37,22 +37,23 @@ class EmbeddingMetadata:
 
 
 class EmbeddingModel:
-    def __init__(self, prefer: str | None = None):
+    def __init__(self, prefer: str | None = None, model_name: str | None = None):
         self.backend = "simple"
-        self.model_name: str | None = None
+        self.model_name: str | None = model_name
         self.vectorizer = None
         self._st_model = None
 
         SentenceTransformer = _try_import_sentence_transformers()
-        if (prefer in (None, "sentence-transformers")) and SentenceTransformer:
+        if (prefer in (None, "sentence-transformers", "local", "st", "auto")) and SentenceTransformer:
+            name = model_name or "all-MiniLM-L6-v2"
             try:
-                self._st_model = SentenceTransformer("all-MiniLM-L6-v2")
+                self._st_model = SentenceTransformer(name)
                 self.backend = "sentence-transformers"
-                self.model_name = "all-MiniLM-L6-v2"
-                logger.info("Using sentence-transformers backend.")
+                self.model_name = name
+                logger.info("Using sentence-transformers backend (%s).", name)
                 return
             except Exception as exc:
-                logger.warning("Failed to init sentence-transformers: %s", exc)
+                logger.warning("Failed to init sentence-transformers (%s): %s", name, exc)
 
         TfidfVectorizer = _try_import_sklearn()
         if (prefer in (None, "tfidf", "simple")) and TfidfVectorizer:
@@ -84,8 +85,8 @@ class EmbeddingModel:
 
     def _encode_st(self, texts: List[str]) -> np.ndarray:
         embeddings = self._st_model.encode(
-            texts, convert_to_numpy=True, normalize_embeddings=True
-        )
+            texts, convert_to_numpy=True, normalize_embeddings=True, show_progress_bar=False
+        ).astype(np.float32)
         return embeddings
 
     def _simple_embed(self, texts: List[str]) -> np.ndarray:
@@ -115,7 +116,7 @@ class EmbeddingModel:
     def _normalize(self, vectors: np.ndarray) -> np.ndarray:
         norms = np.linalg.norm(vectors, axis=1, keepdims=True)
         norms[norms == 0] = 1.0
-        return vectors / norms
+        return (vectors / norms).astype(np.float32)
 
     def to_metadata(self, vectorizer_path: Path | None = None) -> EmbeddingMetadata:
         return EmbeddingMetadata(
@@ -131,7 +132,12 @@ class EmbeddingModel:
 
     @classmethod
     def load_from_metadata(cls, meta: EmbeddingMetadata, index_dir: Path) -> "EmbeddingModel":
-        model = cls(prefer=meta.backend)
+        if meta.backend == "sentence-transformers" and _try_import_sentence_transformers() is None:
+            raise RuntimeError(
+                "Index was built with sentence-transformers embeddings, but sentence-transformers is not installed. "
+                "Install it or rebuild the index with a different backend."
+            )
+        model = cls(prefer=meta.backend, model_name=meta.model_name)
         model.backend = meta.backend
         model.model_name = meta.model_name
         if meta.backend == "tfidf" and meta.vectorizer_path:

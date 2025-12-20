@@ -43,8 +43,24 @@ def _normalize_text(text: str) -> str:
     return "\n".join(line.rstrip() for line in text.split("\n"))
 
 
+def _warn_replacements(text: str, path: Path) -> None:
+    repl_count = text.count("\ufffd")
+    if repl_count == 0:
+        return
+    # Warn only when replacement characters appear frequently enough to risk hurting retrieval.
+    ratio = repl_count / max(len(text), 1)
+    if repl_count >= 5 or ratio > 0.001:
+        logger.warning(
+            "Replacement characters detected in %s (count=%d, ratio=%.5f). Consider re-saving as UTF-8.",
+            path,
+            repl_count,
+            ratio,
+        )
+
+
 def _load_txt(path: Path) -> tuple[str, dict]:
-    content = path.read_text(encoding="utf-8", errors="ignore")
+    content = path.read_text(encoding="utf-8", errors="replace")
+    _warn_replacements(content, path)
     return _normalize_text(content), {}
 
 
@@ -69,7 +85,7 @@ def _load_csv(path: Path) -> tuple[str, dict, list[dict]]:
     """
     row_lines = []
     csv_metadata = {"csv_row_count": 0}
-    with path.open("r", encoding="utf-8", newline="") as f:
+    with path.open("r", encoding="utf-8", errors="replace", newline="") as f:
         reader = csv.DictReader(f)
         fieldnames = [fn.lower() for fn in (reader.fieldnames or [])]
         special = {"field_id", "field_label", "notes"}.issubset(set(fieldnames))
@@ -77,7 +93,9 @@ def _load_csv(path: Path) -> tuple[str, dict, list[dict]]:
             line = _format_csv_line(row, special)
             row_lines.append({"row_index": idx, "text": line})
         csv_metadata["csv_row_count"] = len(row_lines)
-    return _normalize_text("\n".join(r["text"] for r in row_lines)), csv_metadata, row_lines
+    combined = "\n".join(r["text"] for r in row_lines)
+    _warn_replacements(combined, path)
+    return _normalize_text(combined), csv_metadata, row_lines
 
 
 def load_document(record: dict, config: Config | None = None) -> dict | None:

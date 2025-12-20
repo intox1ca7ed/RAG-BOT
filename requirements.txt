@@ -1,9 +1,10 @@
 # Required
 numpy
 python-dotenv
+sentence-transformers
 
 # Optional extras (install as needed)
-# sentence-transformers
 # faiss-cpu
 # scikit-learn
 # openai
+# torch (pulled automatically by sentence-transformers on most platforms)

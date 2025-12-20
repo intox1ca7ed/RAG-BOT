@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from typing import Iterable, List
 
+# NOTE: Chunking now respects Q&A detection, per-row CSV chunks with doc context, and paragraph-first
+# splitting to keep intents coherent for routing/hierarchical retrieval.
 
 def _split_long_text(text: str, chunk_size: int, chunk_overlap: int) -> List[str]:
     parts = []
@@ -83,9 +85,13 @@ def _chunk_qna(content: str, base_metadata: dict) -> list[dict]:
 
 def _chunk_csv_rows(csv_rows: list[dict], base_metadata: dict) -> list[dict]:
     chunks = []
+    doc_name = base_metadata.get("title") or base_metadata.get("doc_id", "doc")
     for row in csv_rows:
         row_idx = row.get("row_index", len(chunks))
-        text = row.get("text", "").strip()
+        row_text = row.get("text", "").strip()
+        if not row_text:
+            continue
+        text = f"{doc_name}: {row_text}"
         if not text:
             continue
         chunk_id = f"{base_metadata.get('doc_id', 'doc')}-row-{row_idx:04d}"
