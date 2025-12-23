@@ -59,7 +59,7 @@ def test_smoke(tmp_path: Path) -> None:
     vectors = embed_model.fit([c["text"] for c in chunks])
     index = IndexStore.build(vectors, chunks, embed_model.to_metadata())
 
-    hits, confidence, info = retrieve("visa passport", index, embed_model, top_k=2, config=cfg)
+    hits, confidence, info = retrieve("visa information", index, embed_model, top_k=2, config=cfg)
     assert hits, "Expected retrieval hits from smoke test corpus"
     assert isinstance(confidence, bool)
     assert "allowed_tags" in info

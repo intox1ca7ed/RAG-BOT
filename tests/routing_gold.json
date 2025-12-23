@@ -1,0 +1,18 @@
+[
+  {"question": "Do I need a visa if I travel to China for 20 days?", "expected_intent": "none"},
+  {"question": "How long does it take to process a visa for China?", "expected_intent": "processing_time"},
+  {"question": "How long does apostille take and how much does it cost?", "expected_intent": "apostille"},
+  {"question": "What documents do I need for consular legalization?", "expected_intent": "legalization"},
+  {"question": "Where is your office in Moscow and what is the phone number?", "expected_intent": "contact"},
+  {"question": "What are your opening hours on Saturday?", "expected_intent": "opening_hours"},
+  {"question": "How do I send my passport by express mail?", "expected_intent": "delivery"},
+  {"question": "How much does the furniture tour cost per day?", "expected_intent": "furniture_tour_cost"},
+  {"question": "What are customs duties per kg for furniture shipment?", "expected_intent": "customs_duties"},
+  {"question": "Do you have a visa application form I can download?", "expected_intent": "form"},
+  {"question": "How do I contact the consulate office?", "expected_intent": "contact"},
+  {"question": "Can I get urgent apostille service?", "expected_intent": "apostille"},
+  {"question": "Do I need a visa for 20 days in China?", "expected_intent": "visa_requirement"},
+  {"question": "What is the difference between apostille and legalization?", "expected_intent": "apostille_vs_legalization"},
+  {"question": "How many kg can I ship in one container?", "expected_intent": "delivery"},
+  {"question": "I am not sure what I need, can you help?", "expected_intent": "none"}
+]

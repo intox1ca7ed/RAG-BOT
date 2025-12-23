@@ -75,6 +75,28 @@ def main() -> None:
 
     logger.info("Loading manifest from %s", cfg.manifest_csv)
     records = load_manifest(cfg)
+    # Post-process topics to disambiguate furniture tour vs customs duties
+    renamed = 0
+    for rec in records:
+        title = str(rec.get("title", "")).lower()
+        local_path = str(rec.get("local_path", "")).lower()
+        doc_id = str(rec.get("doc_id", "")).lower()
+        duties_hit = ("furniture" in title and "duties" in title) or ("furniture" in local_path and "duties" in local_path)
+        if duties_hit:
+            if rec.get("topic") != "customs_duties":
+                rec["topic"] = "customs_duties"
+                renamed += 1
+            tags = str(rec.get("tags", "")).split(",")
+            for tag in ("duties", "customs"):
+                if tag not in tags:
+                    tags.append(tag)
+            rec["tags"] = ",".join(t.strip() for t in tags if t.strip())
+        if "furniture tour" in title or "furniture_tour" in doc_id:
+            if rec.get("topic") != "furniture_tour":
+                rec["topic"] = "furniture_tour"
+                renamed += 1
+    if renamed:
+        logger.warning("Updated topics/tags for %d manifest records (furniture/customs disambiguation).", renamed)
     docs = load_corpus(records, cfg)
     logger.info("Loaded %d documents", len(docs))
 

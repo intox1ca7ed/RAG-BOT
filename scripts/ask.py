@@ -88,6 +88,64 @@ def parse_args() -> argparse.Namespace:
         default="cross-encoder/ms-marco-MiniLM-L-6-v2",
         help="Cross-encoder model for reranking.",
     )
+    parser.add_argument(
+        "--llm_model",
+        default="gpt-4o-mini",
+        help="LLM model to use for final answer generation (default/recommended: gpt-4o-mini).",
+    )
+    parser.add_argument(
+        "--max_tokens",
+        type=int,
+        default=600,
+        help="Max tokens for LLM response (when not using --no_llm).",
+    )
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=0.2,
+        help="LLM temperature (when not using --no_llm).",
+    )
+    parser.add_argument(
+        "--llm_timeout",
+        type=int,
+        default=60,
+        help="LLM request timeout in seconds (if supported by client).",
+    )
+    parser.add_argument(
+        "--grounding",
+        choices=["strict", "loose", "none"],
+        default="strict",
+        help="Grounding mode for LLM answers (strict requires sources, loose is permissive).",
+    )
+    parser.add_argument(
+        "--router_backend",
+        choices=["rules", "llm", "auto"],
+        default="rules",
+        help="Routing backend: rules (default), llm, or auto (rules when confident, otherwise LLM).",
+    )
+    parser.add_argument(
+        "--show_sources",
+        dest="show_sources",
+        action="store_true",
+        default=True,
+        help="Print retrieved sources after the answer (on by default).",
+    )
+    parser.add_argument(
+        "--no_show_sources",
+        dest="show_sources",
+        action="store_false",
+        help="Do not print retrieved sources after the answer.",
+    )
+    parser.add_argument(
+        "--routing_log",
+        default=None,
+        help="Optional path to append routing events as JSONL.",
+    )
+    parser.add_argument(
+        "--routing_log_include_rationale",
+        action="store_true",
+        help="Include LLM router rationale in routing log (off by default).",
+    )
     return parser.parse_args()
 
 
@@ -136,23 +194,39 @@ def main() -> None:
             rerank_top_n=args.rerank_top_n,
             rerank_top_k=args.rerank_top_k,
             reranker_model=args.reranker_model,
+            llm_model=args.llm_model,
+            max_tokens=args.max_tokens,
+            temperature=args.temperature,
+            llm_timeout=args.llm_timeout,
+            grounding=args.grounding,
+            router_backend=args.router_backend,
+            routing_log=args.routing_log,
+            routing_log_include_rationale=args.routing_log_include_rationale,
         )
     except SklearnVersionMismatch as mismatch:
         if args.rebuild_on_mismatch and _rebuild_index(args):
             result = answer_question(
-            question=args.question,
-            top_k=args.topk,
-            use_llm=not args.no_llm,
-            show_context=args.show_context,
-            config=cfg,
-            rebuild_on_mismatch=False,
-            debug=args.debug,
-            rerank=args.rerank,
-            rerank_mode=args.rerank_mode,
-            rerank_top_n=args.rerank_top_n,
-            rerank_top_k=args.rerank_top_k,
-            reranker_model=args.reranker_model,
-        )
+                question=args.question,
+                top_k=args.topk,
+                use_llm=not args.no_llm,
+                show_context=args.show_context,
+                config=cfg,
+                rebuild_on_mismatch=False,
+                debug=args.debug,
+                rerank=args.rerank,
+                rerank_mode=args.rerank_mode,
+                rerank_top_n=args.rerank_top_n,
+                rerank_top_k=args.rerank_top_k,
+                reranker_model=args.reranker_model,
+                llm_model=args.llm_model,
+                max_tokens=args.max_tokens,
+                temperature=args.temperature,
+                llm_timeout=args.llm_timeout,
+                grounding=args.grounding,
+                router_backend=args.router_backend,
+                routing_log=args.routing_log,
+                routing_log_include_rationale=args.routing_log_include_rationale,
+            )
         else:
             print(str(mismatch))
             sys.exit(1)
@@ -170,7 +244,9 @@ def main() -> None:
         f"(fallback_used={info.get('fallback_used', False)}; reasons={';'.join(info.get('fallback_reasons', [])) or 'none'})"
     )
     print(f"China default priority: {info.get('prefer_china_default', False)}")
-    print(f"Intent: {info.get('intent')} (conf={info.get('intent_confidence'):.2f}, rule={info.get('intent_rule')})")
+    print(
+        f"Intent: {info.get('intent')} (conf={info.get('intent_confidence'):.2f}, rule={info.get('intent_rule')}, backend={info.get('router_backend','rules')})"
+    )
     print(
         f"Processing lock: {info.get('processing_country') or 'none'}; "
         f"Contact strict: {info.get('contact_strict', False)}"
@@ -182,6 +258,8 @@ def main() -> None:
     )
     print(f"Shortlisted docs: {', '.join(info.get('shortlisted_docs', [])) or 'none'}")
     print(f"Top score: {info['top_score']:.3f}")
+    if args.debug and not args.no_llm:
+        print(f"LLM: model={args.llm_model} max_tokens={args.max_tokens} temp={args.temperature}")
     if args.debug and info.get("contact_allowed_docs"):
         print("Contact allowlist docs:")
         for doc in info["contact_allowed_docs"]:
@@ -198,6 +276,10 @@ def main() -> None:
         print("Rerank sample (top 5):")
         for row in info["rerank_table"]:
             print(f"- {row}")
+    if args.debug and info.get("delivery_debug"):
+        print("Delivery candidates:")
+        for row in info["delivery_debug"][:3]:
+            print(f"- {row}")
     if args.backend != "auto" and info.get("backend") and info.get("backend") != args.backend:
         print(f"Note: requested backend {args.backend} but index uses {info.get('backend')}; rebuild if needed.")
 
@@ -208,14 +290,38 @@ def main() -> None:
             enc = sys.stdout.encoding or "utf-8"
             print(text.encode(enc, errors="replace").decode(enc))
 
+    def _brief_sources(res: dict, limit: int = 5) -> list[str]:
+        seen = set()
+        items: list[str] = []
+        for chunk, _score in res.get("used_hits") or []:
+            meta = chunk.get("metadata", {})
+            doc_id = meta.get("doc_id") or meta.get("chunk_id") or ""
+            if doc_id in seen:
+                continue
+            seen.add(doc_id)
+            title = meta.get("title") or doc_id or "unknown"
+            items.append(f"{title} ({doc_id})")
+            if len(items) >= limit:
+                break
+        return items
+
     print("Answer:")
     _safe_print(result["answer_text"])
-    print("Sources:")
-    if result["sources"]:
-        for src in result["sources"]:
-            _safe_print(f"- {src}")
-    else:
-        print("- none")
+    if args.show_sources:
+        print("Sources:")
+        if args.debug:
+            if result["sources"]:
+                for src in result["sources"]:
+                    _safe_print(f"- {src}")
+            else:
+                print("- none")
+        else:
+            brief = _brief_sources(result)
+            if brief:
+                for src in brief:
+                    _safe_print(f"- {src}")
+            else:
+                print("- none")
     if args.show_context and result["context_lines"]:
         print("Context:")
         for line in result["context_lines"]:
