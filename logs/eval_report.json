@@ -1,0 +1,633 @@
+{
+  "tracks": {
+    "baseline": {
+      "total": 25,
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0,
+      "by_intent": {
+        "contact": {
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0
+        },
+        "opening_hours": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "delivery": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "apostille": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visa_requirement": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visa_price": {
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0
+        },
+        "processing_time": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "none": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "furniture_tour_cost": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0
+        },
+        "cargo_delivery": {
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0
+        },
+        "form": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        }
+      }
+    }
+  },
+  "cases": {
+    "contact_wechat": {
+      "baseline": {
+        "case_id": "contact_wechat",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "contact",
+        "intent_predicted": "contact",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_contacts_txt",
+          "rag_corpus_consulate_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "Yekaterinburg:\nAddress: Malysheva street, 73A, separate entrance (VISAVISA sign)\nOpening hours: Monday - Friday from 11:00 to 19:00\nContact phones:\n+7 (343) 271-90-09\n+7 (912) 244-37-23\nFind us on:\nWhatsApp\nTelegram\nWeChat: dima_tri\nWeChat: Leminore\nChelyabinsk, Karl Libknekhta Street, 2,",
+        "question": "What is your WeChat id?"
+      }
+    },
+    "contact_whatsapp": {
+      "baseline": {
+        "case_id": "contact_whatsapp",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "contact",
+        "intent_predicted": "contact",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_consulate_contacts_txt",
+          "rag_corpus_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "Yekaterinburg:\nAddress: Malysheva street, 73A, separate entrance (VISAVISA sign)\nOpening hours: Monday - Friday from 11:00 to 19:00\nContact phones:\n+7 (343) 271-90-09\n+7 (912) 244-37-23\nFind us on:\nWhatsApp\nTelegram\nWeChat: dima_tri\nWeChat: Leminore\nChelyabinsk, Karl Libknekhta Street, 2,",
+        "question": "Can I contact you via WhatsApp?"
+      }
+    },
+    "contact_phone": {
+      "baseline": {
+        "case_id": "contact_phone",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "contact",
+        "intent_predicted": "contact",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_consulate_contacts_txt",
+          "rag_corpus_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "Address:620142, Russia, Yekaterinburg, Tchaikovsky Street, 45\nContacts:\n1. Department of Bilateral Cooperation:\n2. Consular Department:\n(monday to friday 8:30-12:30, except weekends)\n(Monday to Friday 14:00-18:00, except weekends)\nYekaterinburg:\nAddress: Malysheva street, 73A, separate entrance (VISAVISA sign)\nOpening hours: Monday - Friday from 11:00 to 19:00\nContact phones:\n+7 (343) 271-90-09\n+7 (912) 244-37-23",
+        "question": "What is your phone number in Yekaterinburg?"
+      }
+    },
+    "contact_address": {
+      "baseline": {
+        "case_id": "contact_address",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "contact",
+        "intent_predicted": "contact",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_contacts_txt",
+          "rag_corpus_consulate_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "Yekaterinburg:\nAddress: Malysheva street, 73A, separate entrance (VISAVISA sign)\nOpening hours: Monday - Friday from 11:00 to 19:00\nContact phones:\n+7 (343) 271-90-09\n+7 (912) 244-37-23\nFind us on:\nWhatsApp\nTelegram\nWeChat: dima_tri\nWeChat: Leminore\nChelyabinsk, Karl Libknekhta Street, 2,",
+        "question": "Where is your office address in Yekaterinburg?"
+      }
+    },
+    "office_hours": {
+      "baseline": {
+        "case_id": "office_hours",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "opening_hours",
+        "intent_predicted": "opening_hours",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_contacts_txt",
+          "rag_corpus_consulate_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Contacts\nYekaterinburg:\nAddress: Malysheva street, 73A, separate entrance (VISAVISA sign)\nOpening hours: Monday - Friday from 11:00 to 19:00\nOwner: Trifanov D.A\nContact phones:\n+7 (343) 271-90-09\n+7 (912) 244-37-23\nFind us on:\nWhatsApp\nTelegram\nWeChat: dima_tri\nWeChat: Leminore\nChelyabinsk\nRoyal Tour\nChelyabinsk, Karl Libknekhta Street, 2,\n2nd floor, office 244\n+7 (904) 309-34-81\n1006655@mail.ru\n2054973@mail.ru\n- Email address (for general questions): chinaconsul_ye_ru@mfa.gov.cn\nEmail (for trade and economic issues):ykjlbjss@mofcom.gov.cn\nEmail (for visa issues): ye_visa@csm.mfa.gov.cn\nEmail (by passport; email address if you have any questions, notarial services and other services): ye_visa@csm.mfa.gov.cn\nReception hours Konsular Department\n9:00 - 11:00 on Mondays, Wednesdays and Fridays (except for holidays)",
+        "question": "What are your opening hours?"
+      }
+    },
+    "consulate_hours": {
+      "baseline": {
+        "case_id": "consulate_hours",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "opening_hours",
+        "intent_predicted": "opening_hours",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_consulate_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Email address (for general questions): chinaconsul_ye_ru@mfa.gov.cn\nEmail (for trade and economic issues):ykjlbjss@mofcom.gov.cn\nEmail (for visa issues): ye_visa@csm.mfa.gov.cn\nEmail (by passport; email address if you have any questions, notarial services and other services): ye_visa@csm.mfa.gov.cn\nReception hours Konsular Department\n9:00 - 11:00 on Mondays, Wednesdays and Fridays (except for holidays)\n- Consular Department:\nReference phone number for\u2002citizens\u2002of China: 2535835\n(monday to friday 8:30-12:30, except weekends)\nHelp phone for visa questions: 2535778\n(Monday to Friday 14:00-18:00, except weekends)\nPhone number for \u0441onsul help and: 007-9221509999\n(around the clock)\n3.",
+        "question": "What are the consulate reception hours?"
+      }
+    },
+    "consulate_email": {
+      "baseline": {
+        "case_id": "consulate_email",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "contact",
+        "intent_predicted": "contact",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_consulate_contacts_txt",
+          "rag_corpus_contacts_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "Email address (for general questions): chinaconsul_ye_ru@mfa.gov.cn\nEmail (by passport; email address if you have any questions, notarial services and other services): ye_visa@csm.mfa.gov.cn\nReception hours Konsular Department\n9:00 - 11:00 on Mondays, Wednesdays and Fridays (except for holidays)\nAddress:620142, Russia, Yekaterinburg, Tchaikovsky Street, 45\nContacts:\n1. Department of Bilateral Cooperation:\n2. Consular Department:\n(monday to friday 8:30-12:30, except weekends)\n(Monday to Friday 14:00-18:00, except weekends)\nYekaterinburg:\nAddress: Malysheva street, 73A, separate entrance (VISAVISA sign)",
+        "question": "What is the consulate email for visa issues?"
+      }
+    },
+    "delivery_passport": {
+      "baseline": {
+        "case_id": "delivery_passport",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "delivery",
+        "intent_predicted": "delivery",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_main_page_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "You can send documents by express mail/courier and flying envelope via S7 or Ural Airlines.\nProcessing starts after documents arrive at our Moscow office.\nYou can send documents by express mail/courier.",
+        "question": "How can I send my passport if I can't come in person?"
+      }
+    },
+    "delivery_flying_envelope": {
+      "baseline": {
+        "case_id": "delivery_flying_envelope",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "delivery",
+        "intent_predicted": "delivery",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_main_page_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "You can send documents by express mail/courier and flying envelope via S7 or Ural Airlines.\nProcessing starts after documents arrive at our Moscow office.\nYou can send documents by express mail/courier.",
+        "question": "Do you accept a flying envelope via S7 or Ural Airlines?"
+      }
+    },
+    "apostille_standard": {
+      "baseline": {
+        "case_id": "apostille_standard",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "apostille",
+        "intent_predicted": "apostille",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_main_page_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.92,
+        "answer_text": "I couldn't find an exact rule in the sources; please use handoff.\n- Apostille - Legalization of Documents for China\n19,000 rubles for 8 working days\n30,000 rubles for 3 working days",
+        "question": "How much does an apostille cost and how long does it take?"
+      }
+    },
+    "apostille_urgent": {
+      "baseline": {
+        "case_id": "apostille_urgent",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "apostille",
+        "intent_predicted": "apostille",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_main_page_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.92,
+        "answer_text": "- Apostille - Legalization of Documents for China\n19,000 rubles for 8 working days\n30,000 rubles for 3 working days",
+        "question": "Need urgent apostille in 3 working days \u2014 price?"
+      }
+    },
+    "visa_requirement_20_days": {
+      "baseline": {
+        "case_id": "visa_requirement_20_days",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "visa_requirement",
+        "intent_predicted": "visa_requirement",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_consulate_faq_txt",
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_visas_japan_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Question 9: If a Russian citizen's stay exceeds the visa-free period (30 days), can they continue their stay in China?\n- Answer: Russian citizens who plan to stay in China for more than 30 days must apply for a visa in advance at the Chinese Embassy or Consulates, dependin\non the purpose of their stay.\n- Question 11:Do Russian citizens arriving in China under the visa-free regime need to declare their trip to the Chinese Embassy or Consulate in Russia i\nadvance?\n- Answer: Russian citizens who meet the conditions for a visa-free regime do not need to declare their trip to the Chinese Embassy or Consulates in advanc\nbefore entering China.\n- Visas China: field_label: China work visa (Z); notes: Cost depends on visa type; base is 10,000 RUB.\n- (listed as 'depending on the type of visa').\n- Visas Japan: field_label: Japan tourist visa \u2013 single entry (up to 15 days stay); notes: Cost: 6,000 RUB.\n- Processing time: 10\u201312 business days.; (field_id: japan_visa_tourist_single_15)",
+        "question": "Do I need a visa for 20 days in China?"
+      }
+    },
+    "visa_requirement_entry": {
+      "baseline": {
+        "case_id": "visa_requirement_entry",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "visa_requirement",
+        "intent_predicted": "visa_requirement",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_consulate_faq_txt",
+          "rag_corpus_main_page_txt",
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_visas_taiwan_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Question 9: If a Russian citizen's stay exceeds the visa-free period (30 days), can they continue their stay in China?\n- Answer: Russian citizens who plan to stay in China for more than 30 days must apply for a visa in advance at the Chinese Embassy or Consulates, dependin\non the purpose of their stay.\n- Production time 10-12 business days in normal mode, 5-7 business days in urgent mode, express by\nagreement\nPayment upon visa availability, the price includes the Consular fee\nSubmission is impersonal, without your presence at the Consulate\nWe have been working without intermediaries since 2009\nFrom 15.09.2025 to 14.09.2026 China introduces a visa-free regime for trips on time up to 30 days.\n- The following visa categories are still available: Student X1 and X2, Work Z, Driver C, Family S1, Q1.\n- Question 4: Do the Chinese border control authorities check the purpose of entry into China?\n- Do I need any other documents for entr\nbesides my passport?\n- Visas China: field_label: China tourist visa (L) \u2013 single entry; notes: Cost: 12,000 RUB (one-time payment).; (field_id: china_visa_tourism_L_single)\n- Visas Taiwan: field_label: Taiwan visa \u2013 multiple entry, 30 days per entry, corridor 12 months (standard); notes: Cost: 13,000 RUB.; (field_id: tw_multiple_entry_30_12m_standard)",
+        "question": "What are the entry conditions for China right now?"
+      }
+    },
+    "visa_price_q2": {
+      "baseline": {
+        "case_id": "visa_price_q2",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "visa_price",
+        "intent_predicted": "visa_price",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_form_china_csv",
+          "rag_corpus_visas_categories_txt",
+          "rag_corpus_visas_categories_table_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Visas China: field_label: China family visas (Q1/Q2/S1/S2); notes: Cost depends on visa type; base is 10,000 RUB.\n- (listed as 'depending on the type of visa').; (field_id: china_visa_family_Q_S)\n- Form China: field_label: Category of visa requested; notes: Tourism / business / family / study.; (field_id: visa_category)\n- Visas China: field_label: China work visa (Z); notes: Cost depends on visa type; base is 10,000 RUB.\n- (listed as 'depending on the type of visa').\n- Family S1/S2 - Q1/Q2\n1.\n- Proof of relationship\n- Passport + visa of the inviting ID, work/resident permit\n- Marriage certificate\n- Birth certificate\n2.\n- Visas Categories Table: field_label: Q2 (short-term visit to relatives); notes: For relatives visiting China for a short period (up to 180 days).; (field_id: visa_Q2)",
+        "question": "How much for Q2 family visa to China?"
+      }
+    },
+    "visa_price_l_single": {
+      "baseline": {
+        "case_id": "visa_price_l_single",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "visa_price",
+        "intent_predicted": "visa_price",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_visas_japan_csv",
+          "rag_corpus_visas_categories_table_csv",
+          "rag_corpus_consulate_faq_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Visas China: field_label: China tourist visa (L) \u2013 single entry; notes: Cost: 12,000 RUB (one-time payment).; (field_id: china_visa_tourism_L_single)\n- Visas Japan: field_label: Japan tourist visa \u2013 single entry (up to 15 days stay); notes: Cost: 6,000 RUB.\n- Visas China: field_label: China tourist visa (L) \u2013 double entry; notes: Cost: 16,000 RUB (two-time payment).; (field_id: china_visa_tourism_L_double)\n- Visas Categories Table: field_label: L (tourist visa); notes: Issued to foreign citizens for tourist trips.; (field_id: visa_L)\n- Visas China: field_label: China business visa (M) \u2013 single entry; notes: Cost: 12,000 RUB.\n- Question 3: Does the visa-free regime apply to tourist groups?\n- Answer: The visa-free regime applies to Russian citizens who meet its conditions, regardless of whether they enter China as part of a tourist group o\nindividually.",
+        "question": "What is the price for a China tourist visa (L) single entry?"
+      }
+    },
+    "visa_price_m_double": {
+      "baseline": {
+        "case_id": "visa_price_m_double",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "visa_price",
+        "intent_predicted": "visa_price",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_visas_japan_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.9,
+        "answer_text": "- Visas China: field_label: China business visa (M) \u2013 double entry; notes: Cost: 16,000 RUB.\n- Visas China: field_label: China tourist visa (L) \u2013 double entry; notes: Cost: 16,000 RUB (two-time payment).; (field_id: china_visa_tourism_L_double)\n- Visas China: field_label: China business visa (M) \u2013 single entry; notes: Cost: 12,000 RUB.\n- Visas China: field_label: China business visa (M) \u2013 annual multiple entry; notes: Cost: 22,000 RUB.\n- Visas China: field_label: China tourist visa (L) \u2013 single entry; notes: Cost: 12,000 RUB (one-time payment).; (field_id: china_visa_tourism_L_single)\n- Visas Japan: field_label: Japan tourist visa \u2013 single entry (up to 15 days stay); notes: Cost: 6,000 RUB.\n- Processing time: 10\u201312 business days.; (field_id: japan_visa_tourist_single_15)",
+        "question": "What does a China business visa (M) double entry cost?"
+      }
+    },
+    "processing_regular": {
+      "baseline": {
+        "case_id": "processing_regular",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "processing_time",
+        "intent_predicted": "processing_time",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_main_page_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "- Visas China: field_label: Processing times (China visas); notes: Regular mode: 10\u201312 business days.\n- Production time 10-12 business days in normal mode, 5-7 business days in urgent mode, express by\nagreement\nPayment upon visa availability, the price includes the Consular fee\nSubmission is impersonal, without your presence at the Consulate\nWe have been working without intermediaries since 2009\nFrom 15.09.2025 to 14.09.2026 China introduces a visa-free regime for trips on time up to 30 days.\n- The following visa categories are still available: Student X1 and X2, Work Z, Driver C, Family S1, Q1.",
+        "question": "How long does China visa processing take?"
+      }
+    },
+    "processing_urgent": {
+      "baseline": {
+        "case_id": "processing_urgent",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "processing_time",
+        "intent_predicted": "processing_time",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_main_page_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "- Visas China: field_label: Processing times (China visas); notes: Regular mode: 10\u201312 business days.\n- Urgent mode: 5\u20137 business days.\n- Production time 10-12 business days in normal mode, 5-7 business days in urgent mode, express by\nagreement\nPayment upon visa availability, the price includes the Consular fee\nSubmission is impersonal, without your presence at the Consulate\nWe have been working without intermediaries since 2009\nFrom 15.09.2025 to 14.09.2026 China introduces a visa-free regime for trips on time up to 30 days.\n- The following visa categories are still available: Student X1 and X2, Work Z, Driver C, Family S1, Q1.",
+        "question": "How long is urgent China visa processing?"
+      }
+    },
+    "payment_policy": {
+      "baseline": {
+        "case_id": "payment_policy",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "none",
+        "intent_predicted": "none",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_visas_china_csv",
+          "rag_corpus_consulate_faq_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.0,
+        "answer_text": "- Visas China: field_label: Payment policy; notes: Payment upon visa readiness. Consular fee included in the price.; (field_id: china_payment_policy)",
+        "question": "When do I pay for the visa?"
+      }
+    },
+    "furniture_consultant_price": {
+      "baseline": {
+        "case_id": "furniture_consultant_price",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "furniture_tour_cost",
+        "intent_predicted": "furniture_tour_cost",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_furniture_tour_cost_table_csv",
+          "rag_corpus_furniture_tour_txt",
+          "rag_corpus_furniture_tour_how_txt",
+          "rag_corpus_furniture_tour_faq_txt",
+          "rag_corpus_furniture_tour_cost_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "- Furniture Tour Cost Table: field_label: Consultant / translator; notes: Full-time translators with knowledge of language and furniture market.\n- Price: $65.; (field_id: service_consultant_translator)\n- Who is this tour for\n- Selection of furniture.\n- A furniture tour to China - selection of furniture, finishing materials, plumbing,\nlighting, decor, and textiles.\n- Your website states that the duration of a furniture tour is 7 days.\n- Is it possible to have a longer tour?\n- Cost of services",
+        "question": "How much does the consultant/translator cost on the furniture tour?"
+      }
+    },
+    "furniture_export_clearance": {
+      "baseline": {
+        "case_id": "furniture_export_clearance",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "furniture_tour_cost",
+        "intent_predicted": "furniture_tour_cost",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_furniture_tour_cost_txt",
+          "rag_corpus_furniture_tour_cost_table_csv",
+          "rag_corpus_furniture_tour_txt",
+          "rag_corpus_furniture_tour_faq_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "- Cost of services\n- Furniture Tour Cost Table: field_label: Export clearance; notes: Container ordering/submission for loading; EXW\u2192FOB export; documents (certificates etc.); port handling; bill of lading/telex release; port/customs fees.\n- Price: $1100 per container.; (field_id: service_export_clearance)\n- Who is this tour for\n- You can use our customs clearance services or clear your cargo\nyourself.\n- Since we provide a complete set of export\ndocuments for your cargo, you can easily clear your cargo yourself\nby contacting your customs broker in your city.\n- How much should you expect to pay for furniture?\n- The amount you spend depends on many factors:\nYour requirements for the quality and price of furniture;the quantity and range of furniture purchased;\netc.",
+        "question": "What is the export clearance price in furniture tour services?"
+      }
+    },
+    "container_20ft": {
+      "baseline": {
+        "case_id": "container_20ft",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "cargo_delivery",
+        "intent_predicted": "cargo_delivery",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_furniture_tour_delivery_containers_txt",
+          "rag_corpus_furniture_tour_delivery_txt",
+          "rag_corpus_cargo_customs_clearance_txt",
+          "rag_corpus_furniture_tour_delivery_weights_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "- 20-foot container: volume of 28m2.\n- Average capacity with packaging of 3-5 tons of\nfurniture.\n- Containers: dimensions, capacity, and load capacity.\n- 20 foot container: volume of 28 squared meters.\n- Containers (dimensions, capacity, and load capacity)\n- 40-foot container: volume of 62m2.\n- Average capacity with packaging of 5-8 tons of\nfurniture.\n- Types of containers used for transporting furniture:\n20-foot container: volume of 28 squared meters .",
+        "question": "What is the capacity of a 20-foot container?"
+      }
+    },
+    "container_40ft": {
+      "baseline": {
+        "case_id": "container_40ft",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "cargo_delivery",
+        "intent_predicted": "cargo_delivery",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_furniture_tour_delivery_containers_txt",
+          "rag_corpus_furniture_tour_delivery_txt",
+          "rag_corpus_cargo_customs_clearance_txt",
+          "rag_corpus_furniture_tour_delivery_weights_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "- 40-foot container: volume of 62m2.\n- Average capacity with packaging of 5-8 tons of\nfurniture.\n- Containers: dimensions, capacity, and load capacity.\n- 20 foot container: volume of 28 squared meters.\n- 20-foot container: volume of 28m2.\n- Average capacity with packaging of 3-5 tons of\nfurniture.\n- Containers (dimensions, capacity, and load capacity)\n- Types of containers used for transporting furniture:\n20-foot container: volume of 28 squared meters .",
+        "question": "Tell me about the 40-foot container capacity."
+      }
+    },
+    "cargo_delivery_time": {
+      "baseline": {
+        "case_id": "cargo_delivery_time",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "cargo_delivery",
+        "intent_predicted": "cargo_delivery",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_cargo_txt",
+          "rag_corpus_furniture_tour_delivery_txt"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.8,
+        "answer_text": "Minimum shipment is 10 kg and delivery takes 2-3 weeks.",
+        "question": "What is the minimum cargo delivery and how long does it take?"
+      }
+    },
+    "china_form": {
+      "baseline": {
+        "case_id": "china_form",
+        "track": "baseline",
+        "status": "passed",
+        "intent_expected": "form",
+        "intent_predicted": "form",
+        "intent_ok": true,
+        "retrieval_ok": true,
+        "content_ok": true,
+        "missing_includes": [],
+        "forbidden_hits": [],
+        "top_docs": [
+          "rag_corpus_form_china_csv",
+          "rag_corpus_form_japan_csv",
+          "rag_corpus_form_taiwan_csv",
+          "rag_corpus_visas_categories_txt",
+          "rag_corpus_visas_china_csv"
+        ],
+        "router_backend_used": "rules",
+        "confidence": 0.85,
+        "answer_text": "- Form China: field_label: Category of visa requested; notes: Tourism / business / family / study.; (field_id: visa_category)",
+        "question": "Where can I get the China visa application form?"
+      }
+    }
+  }
+}

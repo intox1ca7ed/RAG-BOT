@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
+import subprocess
+import sys
 
 from rag_core.chunking import chunk_corpus
 from rag_core.config import Config
@@ -189,3 +191,25 @@ def test_china_processing_time_filters_traps(tmp_path: Path) -> None:
     assert "furniture" not in text_lower
     assert res["hits"][0][0]["metadata"]["doc_id"] == "china_processing_doc"
     assert res["retrieval_info"]["top_score"] <= 1.000001
+
+
+def test_eval_answers_baseline_smoke(tmp_path: Path) -> None:
+    report_json = tmp_path / "eval_report.json"
+    report_txt = tmp_path / "eval_report.txt"
+    repo_root = Path(__file__).resolve().parents[1]
+    cmd = [
+        sys.executable,
+        str(repo_root / "scripts" / "eval_answers.py"),
+        "--track",
+        "baseline",
+        "--limit",
+        "3",
+        "--report_json",
+        str(report_json),
+        "--report_txt",
+        str(report_txt),
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    assert report_json.exists()
+    assert report_txt.exists()

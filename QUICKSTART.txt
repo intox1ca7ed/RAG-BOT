@@ -8,10 +8,11 @@ Quickstart
 
 3) Ask a question:
    python scripts/ask.py --question "What visas are needed?"
+   (router_backend defaults to auto; uses rules when confident, otherwise LLM router if available)
    Add --show_context to view retrieved chunks. Add --no_llm to skip OpenAI.
+   Deterministic baseline: python scripts/ask.py --question "What visas are needed?" --router_backend rules --no_llm --debug
 
 4) Optional LLM answers:
    set OPENAI_API_KEY=your_key_here
    (answers will be grounded on retrieved context; otherwise an extractive answer is returned)
-
 

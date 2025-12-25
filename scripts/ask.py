@@ -120,8 +120,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--router_backend",
         choices=["rules", "llm", "auto"],
-        default="rules",
-        help="Routing backend: rules (default), llm, or auto (rules when confident, otherwise LLM).",
+        default="auto",
+        help="Routing backend: auto (default user-facing), rules (deterministic regression), llm (forces LLM router; needs OPENAI_API_KEY).",
     )
     parser.add_argument(
         "--show_sources",
@@ -245,7 +245,7 @@ def main() -> None:
     )
     print(f"China default priority: {info.get('prefer_china_default', False)}")
     print(
-        f"Intent: {info.get('intent')} (conf={info.get('intent_confidence'):.2f}, rule={info.get('intent_rule')}, backend={info.get('router_backend','rules')})"
+        f"Intent: {info.get('intent')} (conf={info.get('intent_confidence'):.2f}, rule={info.get('intent_rule')}, backend={info.get('router_backend','rules')} requested={info.get('router_backend_requested','auto')})"
     )
     print(
         f"Processing lock: {info.get('processing_country') or 'none'}; "

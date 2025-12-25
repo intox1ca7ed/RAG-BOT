@@ -119,6 +119,9 @@ def main() -> None:
     if embed_model.backend == "tfidf":
         vectorizer_path = "vectorizer.pkl"
         embed_model.save_vectorizer(index_dir / vectorizer_path)
+    elif embed_model.backend == "simple":
+        vectorizer_path = "simple_vocab.json"
+        embed_model.save_vectorizer(index_dir / vectorizer_path)
 
     meta_vectorizer_path = index_dir / vectorizer_path if vectorizer_path else None
     index_store = IndexStore.build(

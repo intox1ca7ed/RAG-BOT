@@ -92,6 +92,7 @@ HOURS_BOOST_TERMS = ["monday", "tuesday", "weekday", "hours", "open", "close", "
 CUSTOMS_TERMS = ["duty", "customs", "per kg", "tariff", "hs code"]
 FURNITURE_TERMS = ["furniture", "tour"]
 FURNITURE_COST_TERMS = ["cost", "price", "how much"]
+MESSENGER_TERMS = ["wechat", "whatsapp", "telegram", "messenger", "phone", "email", "contact", "id", "handle"]
 ROUTER_INTENTS = [
     "contact",
     "opening_hours",
@@ -103,6 +104,8 @@ ROUTER_INTENTS = [
     "customs_duties",
     "processing_time",
     "visa_requirement",
+    "visa_price",
+    "cargo_delivery",
     "form",
     "none",
 ]
@@ -116,6 +119,11 @@ def _tags_set(meta_tags: str | list | None) -> set[str]:
     else:
         items = str(meta_tags).split(",")
     return {t.strip().lower() for t in items if t and str(t).strip()}
+
+
+def _has_messenger_term(text: str) -> bool:
+    t = text.lower()
+    return any(term in t for term in MESSENGER_TERMS)
 
 
 def _merged_tags(meta: dict) -> set[str]:
@@ -198,14 +206,47 @@ def _detect_intent(question: str) -> tuple[str | None, float, str]:
         "visa free",
         "entry conditions",
         "entry requirement",
+        "right now",
         "can i enter",
         "how long can i stay",
         "stay",
         "30 days",
         "20 days",
     ]
+    messenger_terms = ["wechat", "whatsapp", "telegram", "messenger", "phone", "email", "contact", "id", "handle"]
+    cargo_terms = [
+        "container",
+        "containers",
+        "20ft",
+        "40ft",
+        "cube",
+        "cbm",
+        "volume",
+        "pallet",
+        "shipping",
+        "cargo",
+        "freight",
+        "weights",
+        "kg",
+        "dimensions",
+        "size",
+        "sizes",
+    ]
+    visa_price_cost_terms = ["how much", "cost", "price", "fee", "fees"]
+    visa_codes = ["q2", "l", "m", "x1", "x2", "z"]
+    form_terms = ["application form", "visa application form", "visa form", "anketa", "опросный лист"]
     if any(term in q for term in visa_req_terms):
         return "visa_requirement", 0.9, "visa_requirement_keywords"
+    if any(term in q for term in form_terms):
+        return "form", 0.85, "form_keywords"
+    if any(term in q for term in messenger_terms):
+        return "contact", 0.85, "contact_messenger"
+    if any(code in q for code in visa_codes) and any(term in q for term in visa_price_cost_terms) and "visa" in q:
+        return "visa_price", 0.9, "visa_price_code_cost"
+    if "visa" in q and any(term in q for term in visa_price_cost_terms):
+        return "visa_price", 0.86, "visa_price_keywords"
+    if any(term in q for term in cargo_terms):
+        return "cargo_delivery", 0.8, "cargo_keywords"
     if any(term in q for term in contact_terms):
         return "contact", 0.9, "contact_keywords"
     if any(term in q for term in OPENING_HOURS_TERMS):
@@ -231,6 +272,23 @@ def _detect_intent(question: str) -> tuple[str | None, float, str]:
     if "form" in q or "application" in q:
         return "form", 0.6, "form_keyword"
     return None, 0.0, "none"
+
+
+def _is_entry_conditions_query(q_lower: str) -> bool:
+    return any(
+        term in q_lower
+        for term in [
+            "entry condition",
+            "entry conditions",
+            "entry requirement",
+            "entry requirements",
+            "visa-free",
+            "visa free",
+            "right now",
+            "how long can i stay",
+            "stay",
+        ]
+    )
 
 
 @dataclass
@@ -259,9 +317,21 @@ def _rules_router(question: str) -> RouterResult:
     if intent == "visa_requirement":
         allowed_tags = {"visa", "china"}
         allowed_conf = max(allowed_conf, 0.85)
+    if intent == "visa_price":
+        allowed_tags = {"visa", "china"}
+        allowed_conf = max(allowed_conf, 0.85)
     if intent == "apostille_vs_legalization":
         allowed_tags = {"apostille", "legalization"}
         allowed_conf = max(allowed_conf, 0.85)
+    if intent == "cargo_delivery":
+        allowed_tags = {"cargo", "delivery"}
+        allowed_conf = max(allowed_conf, 0.8)
+    if intent == "form":
+        if "china" in question.lower():
+            allowed_tags = {"form", "china"}
+        else:
+            allowed_tags = {"form"}
+        allowed_conf = max(allowed_conf, 0.8)
     return RouterResult(
         intent=intent,
         intent_confidence=intent_conf,
@@ -380,7 +450,8 @@ def llm_route(
         "- do I need a visa / visa-free / stay X days / entry conditions -> visa_requirement\n"
         "- processing time / urgent / days to prepare visa -> processing_time\n"
         "- send passport / courier / express mail -> delivery\n"
-        "- container volume / kg / weights / shipping / cargo -> delivery\n"
+        "- container volume / kg / weights / shipping / cargo -> cargo_delivery\n"
+        "- wechat / whatsapp / telegram / phone / email / contact / id / handle -> contact\n"
         "- apostille vs legalization / difference -> apostille_vs_legalization (or apostille)\n"
         "Choose ONLY from the provided intents; if uncertain choose 'none' with low confidence. Return at most 3 tags.\n"
     )
@@ -391,7 +462,8 @@ def llm_route(
     user_msg = (
         f"Question: {question}\n\nDoc catalog (metadata only):\n{catalog_text}\n\n"
         "Return a JSON object with keys: intent (string), allowed_tags (array of strings), confidence (0-1 float), rationale (short string). "
-        "Use only intents/tags from the provided lists. If uncertain, use intent='none', allowed_tags=[], confidence<=0.5. Do not return more than 3 tags."
+        "Use only intents/tags from the provided lists. If uncertain, use intent='none', allowed_tags=[], confidence<=0.5. Do not return more than 3 tags. "
+        "If the question is asking how to reach us or for messenger IDs (wechat/whatsapp/telegram/phone/email/contact/id/handle), choose intent='contact'."
     )
 
     def _call():
@@ -450,6 +522,10 @@ def llm_route(
                 allowed_tags = [t for t in allowed_tags if t in set(available_tags)][:3]
                 if len(allowed_tags) < len(parsed.get("allowed_tags", [])):
                     corrections.append("tags_trimmed")
+                if intent == "none" and _has_messenger_term(question):
+                    intent = "contact"
+                    conf = max(conf, 0.6)
+                    corrections.append("override_contact_messenger")
                 if debug and corrections:
                     logger.info("llm_router_output_corrected=%s", ",".join(corrections))
                 return RouterResult(
@@ -516,6 +592,7 @@ def _score_documents(
     debug: bool,
     exclusions: list[str],
     include_reasons: list[str],
+    entry_conditions: bool,
     allow_main_page: bool,
     query_text: str,
 ) -> tuple[dict, dict, list[str]]:
@@ -617,6 +694,8 @@ def _score_documents(
                     break
         if intent == "apostille" and is_main_page:
             score += 0.3
+        if entry_conditions and is_main_page:
+            score += 0.25
         if intent == "furniture_tour_cost" and is_duties:
             score -= 0.35
         if intent == "customs_duties" and is_duties:
@@ -711,6 +790,8 @@ def retrieve(
     # Processing-time intent country restriction
     processing_country: str | None = None
     q_lower = question.lower()
+    entry_conditions = intent == "visa_requirement" and _is_entry_conditions_query(q_lower)
+    payment_query = "pay" in q_lower or "payment" in q_lower
     if processing_focus and ("china" in allowed_tags or any(term in q_lower for term in PROCESSING_COUNTRY_TERMS)):
         processing_country = "china"
 
@@ -781,7 +862,8 @@ def retrieve(
         debug=debug,
         exclusions=exclusions,
         include_reasons=contact_include_reasons,
-        allow_main_page=operational_intent,
+        entry_conditions=entry_conditions,
+        allow_main_page=operational_intent or entry_conditions,
         query_text=question,
     )
 
@@ -816,7 +898,8 @@ def retrieve(
             debug=debug,
             exclusions=exclusions,
             include_reasons=contact_include_reasons,
-            allow_main_page=operational_intent,
+            entry_conditions=entry_conditions,
+            allow_main_page=operational_intent or entry_conditions,
             query_text=question,
         )
 
@@ -841,13 +924,18 @@ def retrieve(
             debug=debug,
             exclusions=exclusions,
             include_reasons=contact_include_reasons,
-            allow_main_page=operational_intent,
+            entry_conditions=entry_conditions,
+            allow_main_page=operational_intent or entry_conditions,
             query_text=question,
         )
 
     shortlisted = sorted(doc_scores.items(), key=lambda x: x[1], reverse=True)[:DOC_SHORTLIST]
     shortlisted_ids = {doc_id for doc_id, _ in shortlisted}
     if processing_focus:
+        for doc_id in doc_indices.keys():
+            if "main_page" in doc_id or "main-page" in doc_id:
+                shortlisted_ids.add(doc_id)
+    if entry_conditions:
         for doc_id in doc_indices.keys():
             if "main_page" in doc_id or "main-page" in doc_id:
                 shortlisted_ids.add(doc_id)
@@ -874,8 +962,8 @@ def retrieve(
         if intent in {"opening_hours"}:
             if not (is_main or "contact" in tags or "hours" in tags):
                 return False
-        if intent == "delivery":
-            if not (is_main or any(k in tags for k in {"delivery", "shipping", "express", "mail"})):
+        if intent in {"delivery", "cargo_delivery"}:
+            if not (is_main or any(k in tags for k in {"delivery", "shipping", "express", "mail", "cargo"})):
                 return False
         if intent == "apostille":
             if not (is_main or ({"apostille", "legalization", "legalisation"} & tags)):
@@ -913,6 +1001,16 @@ def retrieve(
                     sim += 0.3
             if intent == "delivery" and any(term in text_lower for term in DELIVERY_BOOST_TERMS):
                 sim += 0.25
+            if intent == "form":
+                if "category of visa requested" in text_lower:
+                    sim += 0.35
+                elif "visa application form" in text_lower or "application form" in text_lower:
+                    sim += 0.2
+            if intent == "visa_requirement" and entry_conditions:
+                if "visa-free" in text_lower and ("30 days" in text_lower or "30 day" in text_lower):
+                    sim += 0.3
+            if payment_query and "payment upon visa readiness" in text_lower:
+                sim += 0.35
             if intent == "contact" and any(term in text_lower for term in CONTACT_BOOST_TERMS):
                 sim += 0.25
             if intent == "opening_hours" and any(term in text_lower for term in HOURS_BOOST_TERMS):
@@ -927,6 +1025,27 @@ def retrieve(
     chunk_hits.sort(key=lambda x: x[1], reverse=True)
     # Post-filter chunks to enforce country/topic constraints and limit context size
     filtered_hits = [(c, s) for c, s in chunk_hits if _chunk_allowed(c.get("metadata", {}))]
+    if intent == "cargo_delivery" and not filtered_hits:
+        cargo_terms = ["cargo", "container", "containers", "shipping", "delivery"]
+        broadened = []
+        for c, s in chunk_hits:
+            meta = c.get("metadata", {})
+            doc_id = str(meta.get("doc_id", "")).lower()
+            title = str(meta.get("title", "")).lower()
+            topic = str(meta.get("topic", "")).lower()
+            tags = _tags_set(meta.get("tags"))
+            if any(term in doc_id for term in cargo_terms) or any(term in title for term in cargo_terms):
+                broadened.append((c, s))
+                continue
+            if any(term in topic for term in cargo_terms):
+                broadened.append((c, s))
+                continue
+            if tags & set(cargo_terms):
+                broadened.append((c, s))
+        if broadened:
+            if debug:
+                logger.info("cargo_delivery_filter_broadened=true matches=%d", len(broadened))
+            filtered_hits = broadened
 
     rerank_table: list[str] = []
     if rerank_enabled and filtered_hits:
@@ -1066,9 +1185,44 @@ def retrieve(
         "rerank_table": rerank_table,
         "delivery_debug": delivery_debug if intent == "delivery" else [],
         "router_backend": used_backend,
+        "router_backend_requested": router_backend_mode,
         "router_rationale": llm_rationale,
         "router_rules_confident": rules_confident_flag,
     }
+    original_result = (hits, confidence, info)
+
+    messenger_guard = (
+        auto_mode
+        and intent == "contact"
+        and intent_conf >= 0.8
+        and _has_messenger_term(question)
+    )
+
+    if auto_mode and used_backend == "rules" and not rules_confident_flag and not _auto_override:
+        llm_hits, llm_confidence, llm_info = retrieve(
+            question,
+            index_store,
+            embed_model,
+            top_k=top_k,
+            config=config,
+            debug=debug,
+            rerank=rerank,
+            rerank_mode=rerank_mode,
+            rerank_top_n=rerank_top_n,
+            rerank_top_k=rerank_top_k,
+            reranker_model=reranker_model,
+            router_backend="llm",
+            llm_model=llm_model,
+            llm_timeout=llm_timeout,
+            _auto_override=True,
+        )
+        llm_intent = llm_info.get("intent")
+        llm_conf = llm_info.get("intent_confidence", 0.0)
+        if messenger_guard and (llm_intent != "contact" and llm_conf < 0.6):
+            if debug:
+                logger.info("auto_guardrail_applied=contact_messenger_prefer_rules")
+        else:
+            return llm_hits, llm_confidence, llm_info
     if debug:
         logger.info(
             "Router intent=%s conf=%.2f rule=%s backend=%s allowed_tags=%s shortlisted=%s top_score=%.3f",

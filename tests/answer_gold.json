@@ -1,0 +1,228 @@
+[
+  {
+    "id": "contact_wechat",
+    "question": "What is your WeChat id?",
+    "mode": "no_llm",
+    "expected_intent": "contact",
+    "must_include": ["wechat", "dima_tri"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_contacts_txt"],
+    "notes": "WeChat handle from contacts."
+  },
+  {
+    "id": "contact_whatsapp",
+    "question": "Can I contact you via WhatsApp?",
+    "mode": "no_llm",
+    "expected_intent": "contact",
+    "must_include": ["whatsapp"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_contacts_txt"]
+  },
+  {
+    "id": "contact_phone",
+    "question": "What is your phone number in Yekaterinburg?",
+    "mode": "no_llm",
+    "expected_intent": "contact",
+    "must_include": ["+7 (343)"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_contacts_txt"]
+  },
+  {
+    "id": "contact_address",
+    "question": "Where is your office address in Yekaterinburg?",
+    "mode": "no_llm",
+    "expected_intent": "contact",
+    "must_include": ["malysheva street"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_contacts_txt"]
+  },
+  {
+    "id": "office_hours",
+    "question": "What are your opening hours?",
+    "mode": "no_llm",
+    "expected_intent": "opening_hours",
+    "must_include": ["re:monday\\s*-\\s*friday", "11:00", "19:00"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_contacts_txt"]
+  },
+  {
+    "id": "consulate_hours",
+    "question": "What are the consulate reception hours?",
+    "mode": "no_llm",
+    "expected_intent": "opening_hours",
+    "must_include": ["9:00", "11:00"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_consulate_contacts_txt"]
+  },
+  {
+    "id": "consulate_email",
+    "question": "What is the consulate email for visa issues?",
+    "mode": "no_llm",
+    "expected_intent": "contact",
+    "must_include": ["ye_visa@csm.mfa.gov.cn"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_consulate_contacts_txt"]
+  },
+  {
+    "id": "delivery_passport",
+    "question": "How can I send my passport if I can't come in person?",
+    "mode": "no_llm",
+    "expected_intent": "delivery",
+    "must_include": ["courier", "s7"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_main_page_txt", "rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "delivery_flying_envelope",
+    "question": "Do you accept a flying envelope via S7 or Ural Airlines?",
+    "mode": "no_llm",
+    "expected_intent": "delivery",
+    "must_include": ["flying envelope", "s7"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_main_page_txt"]
+  },
+  {
+    "id": "apostille_standard",
+    "question": "How much does an apostille cost and how long does it take?",
+    "mode": "no_llm",
+    "expected_intent": "apostille",
+    "must_include": ["19,000", "8 working days"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_main_page_txt"]
+  },
+  {
+    "id": "apostille_urgent",
+    "question": "Need urgent apostille in 3 working days — price?",
+    "mode": "no_llm",
+    "expected_intent": "apostille",
+    "must_include": ["30,000", "3 working days"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_main_page_txt"]
+  },
+  {
+    "id": "visa_requirement_20_days",
+    "question": "Do I need a visa for 20 days in China?",
+    "mode": "no_llm",
+    "expected_intent": "visa_requirement",
+    "must_include": ["visa-free", "30 days"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_consulate_faq_txt", "rag_corpus_visas_categories_txt", "rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "visa_requirement_entry",
+    "question": "What are the entry conditions for China right now?",
+    "mode": "no_llm",
+    "expected_intent": "visa_requirement",
+    "must_include": ["visa-free", "30 days"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_main_page_txt"]
+  },
+  {
+    "id": "visa_price_q2",
+    "question": "How much for Q2 family visa to China?",
+    "mode": "no_llm",
+    "expected_intent": "visa_price",
+    "must_include": ["10,000", "rub"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "visa_price_l_single",
+    "question": "What is the price for a China tourist visa (L) single entry?",
+    "mode": "no_llm",
+    "expected_intent": "visa_price",
+    "must_include": ["12,000", "rub"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "visa_price_m_double",
+    "question": "What does a China business visa (M) double entry cost?",
+    "mode": "no_llm",
+    "expected_intent": "visa_price",
+    "must_include": ["16,000", "rub"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "processing_regular",
+    "question": "How long does China visa processing take?",
+    "mode": "no_llm",
+    "expected_intent": "processing_time",
+    "must_include": ["re:10\\D+12\\s*business days"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "processing_urgent",
+    "question": "How long is urgent China visa processing?",
+    "mode": "no_llm",
+    "expected_intent": "processing_time",
+    "must_include": ["re:5\\D+7\\s*business days"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "payment_policy",
+    "question": "When do I pay for the visa?",
+    "mode": "no_llm",
+    "expected_intent": "none",
+    "must_include": ["payment upon visa readiness"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_visas_china_csv"]
+  },
+  {
+    "id": "furniture_consultant_price",
+    "question": "How much does the consultant/translator cost on the furniture tour?",
+    "mode": "no_llm",
+    "expected_intent": "furniture_tour_cost",
+    "must_include": ["$65"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_furniture_tour_cost_table_csv"]
+  },
+  {
+    "id": "furniture_export_clearance",
+    "question": "What is the export clearance price in furniture tour services?",
+    "mode": "no_llm",
+    "expected_intent": "furniture_tour_cost",
+    "must_include": ["$1100"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_furniture_tour_cost_table_csv"]
+  },
+  {
+    "id": "container_20ft",
+    "question": "What is the capacity of a 20-foot container?",
+    "mode": "no_llm",
+    "expected_intent": "cargo_delivery",
+    "must_include": ["20-foot container", "28m2"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_furniture_tour_delivery_containers_txt"]
+  },
+  {
+    "id": "container_40ft",
+    "question": "Tell me about the 40-foot container capacity.",
+    "mode": "no_llm",
+    "expected_intent": "cargo_delivery",
+    "must_include": ["40-foot container", "62m2"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_furniture_tour_delivery_containers_txt"]
+  },
+  {
+    "id": "cargo_delivery_time",
+    "question": "What is the minimum cargo delivery and how long does it take?",
+    "mode": "no_llm",
+    "expected_intent": "cargo_delivery",
+    "must_include": ["10 kg", "2-3 weeks"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_cargo_txt"]
+  },
+  {
+    "id": "china_form",
+    "question": "Where can I get the China visa application form?",
+    "mode": "no_llm",
+    "expected_intent": "form",
+    "must_include": ["category of visa requested"],
+    "must_not_include": [],
+    "expected_docs_any": ["rag_corpus_form_china_csv"]
+  }
+]

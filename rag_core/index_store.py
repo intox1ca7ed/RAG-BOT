@@ -139,7 +139,11 @@ class IndexStore:
         current_sklearn = _get_sklearn_version()
         if embedding_meta.backend == "tfidf" and saved_sklearn and current_sklearn and saved_sklearn != current_sklearn:
             if rebuild_on_mismatch:
-                raise SklearnVersionMismatch(saved_sklearn, current_sklearn)
+                logger.warning(
+                    "sklearn version mismatch detected (saved=%s current=%s); rebuild requested.",
+                    saved_sklearn,
+                    current_sklearn,
+                )
             raise SklearnVersionMismatch(saved_sklearn, current_sklearn)
 
         embedding_model = EmbeddingModel.load_from_metadata(embedding_meta, index_dir)

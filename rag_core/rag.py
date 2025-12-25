@@ -3,9 +3,11 @@ from __future__ import annotations
 import logging
 import os
 import re
+import subprocess
+import sys
 from typing import Iterable, List, Tuple
 
-from .config import Config, DEFAULT_CONFIG
+from .config import Config, DEFAULT_CONFIG, REPO_ROOT
 from .embeddings import EmbeddingModel
 from .index_store import IndexStore, SklearnVersionMismatch
 from .prompts import SYSTEM_PROMPT, build_user_prompt
@@ -79,7 +81,34 @@ DELIVERY_KEYWORDS = [
 ]
 APOSTILLE_PRICE_PATTERN = re.compile(r"\b\d{1,3}(?:[ ,]\d{3})*\s*rub", re.IGNORECASE)
 APOSTILLE_DAYS_PATTERN = re.compile(r"\b\d+\s*(working\s+)?days?", re.IGNORECASE)
+CARGO_WEIGHT_PATTERN = re.compile(r"\b10\s*kg\b", re.IGNORECASE)
+CARGO_TIME_PATTERN = re.compile(r"\b2\s*[\-\u2013\u2014]\s*3\s*weeks\b|\b2\s*to\s*3\s*weeks\b", re.IGNORECASE)
+FORM_CATEGORY_PATTERN = re.compile(r"\bcategory of visa requested\b", re.IGNORECASE)
+PAYMENT_POLICY_PATTERN = re.compile(r"\bpayment upon visa readiness\b", re.IGNORECASE)
 CITATION_PATTERN = re.compile(r"[Ss](\d+)(?:\s*-\s*(\d+))?")
+
+
+def _rebuild_index(cfg: Config) -> bool:
+    cmd = [
+        sys.executable,
+        str(REPO_ROOT / "scripts" / "build_index.py"),
+        "--rebuild",
+        "--manifest",
+        str(cfg.manifest_csv),
+        "--corpus_root",
+        str(cfg.corpus_root),
+        "--storage_root",
+        str(cfg.storage_root),
+    ]
+    logger.warning("Rebuilding index due to sklearn version mismatch: %s", " ".join(cmd))
+    try:
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        sys.stdout.write(result.stdout)
+        sys.stderr.write(result.stderr)
+        return True
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Failed to rebuild index: %s", exc)
+        return False
 
 
 def _format_sources(hits: Iterable[Tuple[dict, float]]) -> List[str]:
@@ -109,10 +138,15 @@ def _select_sentences(hits: List[Tuple[dict, float]], question: str, max_lines: 
     for chunk, _ in hits:
         sentences = _split_sentences(chunk.get("text", ""))
         chunk_picks = []
-        for sent in sentences:
+        for idx, sent in enumerate(sentences):
             tokens = {w.lower() for w in re.findall(r"\w+", sent)}
             if tokens & question_terms:
                 chunk_picks.append(sent)
+                # also pull a following price sentence if present
+                if idx + 1 < len(sentences):
+                    nxt = sentences[idx + 1]
+                    if re.search(r"\bprice\b|\$\d+|rub", nxt, re.IGNORECASE):
+                        chunk_picks.append(nxt)
             if len(chunk_picks) >= 2:
                 break
         if not chunk_picks and sentences:
@@ -206,6 +240,41 @@ def _format_delivery_answer(hits: List[Tuple[dict, float]], query: str) -> str:
         lines.append("Processing starts after we receive your documents.")
     return "\n".join(lines[:3])
 
+
+def _format_cargo_delivery_answer(hits: List[Tuple[dict, float]]) -> str:
+    weight_found = False
+    time_found = False
+    for chunk, _ in hits:
+        text = chunk.get("text", "")
+        if not weight_found and CARGO_WEIGHT_PATTERN.search(text):
+            weight_found = True
+        if not time_found and CARGO_TIME_PATTERN.search(text):
+            time_found = True
+        if weight_found and time_found:
+            break
+    if weight_found and time_found:
+        return "Minimum shipment is 10 kg and delivery takes 2-3 weeks."
+    if weight_found:
+        return "Minimum shipment is 10 kg."
+    if time_found:
+        return "Delivery takes 2-3 weeks."
+    return ""
+
+
+def _format_form_answer(hits: List[Tuple[dict, float]]) -> str:
+    for chunk, _ in hits:
+        for line in chunk.get("text", "").splitlines():
+            if FORM_CATEGORY_PATTERN.search(line):
+                return f"- {line.strip()}"
+    return ""
+
+
+def _format_payment_policy_answer(hits: List[Tuple[dict, float]]) -> str:
+    for chunk, _ in hits:
+        for line in chunk.get("text", "").splitlines():
+            if PAYMENT_POLICY_PATTERN.search(line):
+                return f"- {line.strip()}"
+    return ""
 
 def truncate_chunk(text: str, max_chars: int = 1200, debug: bool = False) -> str:
     if len(text) <= max_chars:
@@ -316,6 +385,8 @@ def _llm_answer(
         intent_line = "Focus on address, hours, and phone numbers."
     elif intent == "delivery":
         intent_line = "Explain how to send documents (express mail, flying envelope, S7/Ural Airlines) and when processing starts."
+    elif intent == "cargo_delivery":
+        intent_line = "Include minimum shipment weight and delivery time if available."
     elif intent == "apostille":
         intent_line = "Include apostille price and processing time."
     elif intent == "processing_time":
@@ -460,13 +531,38 @@ def _select_evidence(
 
     if intent == "opening_hours":
         hours_filtered = []
-        pattern = re.compile(r"\b(mon|tue|wed|thu|fri|sat|sun)\b|\b\d{1,2}[:.]\d{2}", re.IGNORECASE)
+        non_main = []
+        pattern = re.compile(
+            r"\b(mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday|пн|вт|ср|чт|пт|сб|вс)\b|\b\d{1,2}[:.]\d{2}",
+            re.IGNORECASE,
+        )
+        q_lower = query_text.lower()
         for c, s in selected:
+            meta = c.get("metadata", {})
+            doc_id = str(meta.get("doc_id", "")).lower()
+            tags = _tags_set(meta.get("tags"))
+            if "main_page" in doc_id or "general" in tags:
+                continue
             text_lower = c.get("text", "").lower()
-            if pattern.search(text_lower) or any(kw in text_lower for kw in HOURS_KEYWORDS):
+            non_main.append((c, s))
+            if pattern.search(text_lower):
                 hours_filtered.append((c, s))
         if hours_filtered:
-            selected = hours_filtered[:2]
+            if "consulate" in q_lower:
+                consulate_hits = [
+                    (c, s)
+                    for c, s in hours_filtered
+                    if "consulate" in str(c.get("metadata", {}).get("doc_id", "")).lower()
+                    or "consulate" in _tags_set(c.get("metadata", {}).get("tags"))
+                ]
+                if consulate_hits:
+                    selected = consulate_hits[:2]
+                else:
+                    selected = hours_filtered[:2]
+            else:
+                selected = hours_filtered[:2]
+        elif non_main:
+            selected = non_main[:2]
 
     if intent == "delivery":
         delivery_filtered = []
@@ -538,9 +634,17 @@ def answer_question(
     routing_log_include_rationale: bool = False,
 ) -> dict:
     cfg = config or DEFAULT_CONFIG
-    index_store, embed_model, index_meta = IndexStore.load(
-        cfg.index_dir, rebuild_on_mismatch=rebuild_on_mismatch
-    )
+    try:
+        index_store, embed_model, index_meta = IndexStore.load(
+            cfg.index_dir, rebuild_on_mismatch=rebuild_on_mismatch
+        )
+    except SklearnVersionMismatch:
+        if rebuild_on_mismatch and _rebuild_index(cfg):
+            index_store, embed_model, index_meta = IndexStore.load(
+                cfg.index_dir, rebuild_on_mismatch=False
+            )
+        else:
+            raise
     hits, confidence, info = retrieve(
         question,
         index_store,
@@ -724,6 +828,14 @@ def answer_question(
         answer_text = _format_contact_card(question, hits_for_answer, allowed_contact_docs)
     if not answer_text and info.get("intent") == "delivery":
         answer_text = _format_delivery_answer(hits_for_answer, question)
+    if not answer_text and info.get("intent") == "cargo_delivery":
+        answer_text = _format_cargo_delivery_answer(hits_for_answer)
+    if not answer_text and info.get("intent") == "form":
+        answer_text = _format_form_answer(hits_for_answer)
+    if not answer_text and info.get("intent") == "none":
+        q_lower = question.lower()
+        if "pay" in q_lower or "payment" in q_lower:
+            answer_text = _format_payment_policy_answer(hits_for_answer)
     if not answer_text:
         if top_score < effective_threshold:
             answer_text = "I can't find this in the provided sources. Please contact the office for details."

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import logging
 import pickle
 from dataclasses import dataclass
@@ -42,6 +43,7 @@ class EmbeddingModel:
         self.model_name: str | None = model_name
         self.vectorizer = None
         self._st_model = None
+        self._simple_vocab: dict[str, int] | None = None
 
         SentenceTransformer = _try_import_sentence_transformers()
         if (prefer in (None, "sentence-transformers", "local", "st", "auto")) and SentenceTransformer:
@@ -72,7 +74,8 @@ class EmbeddingModel:
             vectors = self.vectorizer.fit_transform(texts_list).toarray()
             return self._normalize(vectors)
         # simple backend
-        return self._simple_embed(texts_list)
+        self._simple_vocab = self._build_simple_vocab(texts_list)
+        return self._simple_encode(texts_list)
 
     def encode(self, texts: Iterable[str]) -> np.ndarray:
         texts_list = list(texts)
@@ -81,7 +84,9 @@ class EmbeddingModel:
         if self.backend == "tfidf" and self.vectorizer is not None:
             vectors = self.vectorizer.transform(texts_list).toarray()
             return self._normalize(vectors)
-        return self._simple_embed(texts_list)
+        if self._simple_vocab is None:
+            raise RuntimeError("Simple embeddings require a fitted vocab. Rebuild the index or call fit() first.")
+        return self._simple_encode(texts_list)
 
     def _encode_st(self, texts: List[str]) -> np.ndarray:
         embeddings = self._st_model.encode(
@@ -89,29 +94,26 @@ class EmbeddingModel:
         ).astype(np.float32)
         return embeddings
 
-    def _simple_embed(self, texts: List[str]) -> np.ndarray:
+    def _build_simple_vocab(self, texts: List[str]) -> dict[str, int]:
         vocab: dict[str, int] = {}
-        rows = []
         for text in texts:
             tokens = text.lower().split()
-            counts: dict[int, float] = {}
             for tok in tokens:
                 if tok not in vocab:
                     vocab[tok] = len(vocab)
-                idx = vocab[tok]
-                counts[idx] = counts.get(idx, 0.0) + 1.0
-            row = np.zeros(len(vocab), dtype=np.float32)
-            for idx, val in counts.items():
-                if idx >= len(row):
-                    # extend row if vocab grew mid-document
-                    row = np.pad(row, (0, idx - len(row) + 1))
-                row[idx] = val
-            rows.append(row)
-        max_dim = max((r.shape[0] for r in rows), default=0)
-        padded = np.zeros((len(rows), max_dim), dtype=np.float32)
-        for i, row in enumerate(rows):
-            padded[i, : row.shape[0]] = row
-        return self._normalize(padded)
+        return vocab
+
+    def _simple_encode(self, texts: List[str]) -> np.ndarray:
+        # Keep vocab fixed between fit/encode to avoid dimension mismatch.
+        vocab = self._simple_vocab or {}
+        rows = np.zeros((len(texts), len(vocab)), dtype=np.float32)
+        for i, text in enumerate(texts):
+            for tok in text.lower().split():
+                idx = vocab.get(tok)
+                if idx is None:
+                    continue
+                rows[i, idx] += 1.0
+        return self._normalize(rows)
 
     def _normalize(self, vectors: np.ndarray) -> np.ndarray:
         norms = np.linalg.norm(vectors, axis=1, keepdims=True)
@@ -129,6 +131,13 @@ class EmbeddingModel:
         if self.backend == "tfidf" and self.vectorizer is not None:
             with path.open("wb") as f:
                 pickle.dump(self.vectorizer, f)
+        elif self.backend == "simple":
+            if self._simple_vocab is None:
+                logger.warning("Simple vocab missing; skipping vocab save.")
+                return
+            vocab_list = [token for token, _ in sorted(self._simple_vocab.items(), key=lambda item: item[1])]
+            with path.open("w", encoding="utf-8") as f:
+                json.dump({"vocab": vocab_list}, f, ensure_ascii=True)
 
     @classmethod
     def load_from_metadata(cls, meta: EmbeddingMetadata, index_dir: Path) -> "EmbeddingModel":
@@ -149,4 +158,15 @@ class EmbeddingModel:
                     model.vectorizer = pickle.load(f)
             else:
                 logger.warning("Vectorizer file missing at %s", vec_path)
+        if meta.backend == "simple":
+            if not meta.vectorizer_path:
+                raise RuntimeError("Simple embeddings vocab missing; rebuild the index.")
+            vocab_path = Path(meta.vectorizer_path)
+            if not vocab_path.is_absolute():
+                vocab_path = index_dir / vocab_path
+            if not vocab_path.exists():
+                raise RuntimeError(f"Simple embeddings vocab file missing at {vocab_path}. Rebuild the index.")
+            data = json.loads(vocab_path.read_text(encoding="utf-8"))
+            vocab_list = data.get("vocab", []) if isinstance(data, dict) else []
+            model._simple_vocab = {token: idx for idx, token in enumerate(vocab_list)}
         return model
