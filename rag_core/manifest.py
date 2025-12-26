@@ -23,7 +23,7 @@ OPTIONAL_FIELDS = ["language", "translation"]
 
 def _normalize_record(raw: dict) -> dict:
     record = {key: raw.get(key, "") for key in REQUIRED_FIELDS + OPTIONAL_FIELDS}
-    # Preserve any extra fields without enforcing schema.
+                                                         
     for key, value in raw.items():
         if key not in record:
             record[key] = value

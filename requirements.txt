@@ -1,7 +1,10 @@
 numpy
+pandas
+matplotlib
+seaborn
 scikit-learn
 sentence-transformers
-faiss-cpu             
-openai                
-python-telegram-bot    
-torch               
+faiss-cpu
+openai
+python-telegram-bot
+torch

@@ -5,7 +5,7 @@ import logging
 import os
 from pathlib import Path
 
-# Ensure repo root on path
+                          
 REPO_ROOT = Path(__file__).resolve().parent.parent
 import sys
 
@@ -87,7 +87,7 @@ def main() -> None:
                     llm_model=args.llm_model,
                     llm_timeout=args.llm_timeout,
                 )
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:                
                 print(f"{q}\t{mode}\tERROR({exc})\t-\t-\t-\t-")
                 continue
             backend_used = info.get("router_backend", mode)

@@ -17,10 +17,10 @@ from .routing_log import append_routing_event
 
 logger = logging.getLogger(__name__)
 
-# NOTE: Answering tuned for deterministic extractive mode: we honor router/debug info,
-# enforce refusal when evidence is weak, and keep sources/context transparent.
+                                                                                      
+                                                                              
 
-# Refusal tuning
+                
 REFUSAL_SCORE_THRESHOLD = 0.25
 NO_LLM_MAX_CHUNKS_DEFAULT = 6
 NO_LLM_MAX_CHUNKS_PROCESSING_TIME = 2
@@ -106,7 +106,7 @@ def _rebuild_index(cfg: Config) -> bool:
         sys.stdout.write(result.stdout)
         sys.stderr.write(result.stderr)
         return True
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:                
         logger.error("Failed to rebuild index: %s", exc)
         return False
 
@@ -142,7 +142,7 @@ def _select_sentences(hits: List[Tuple[dict, float]], question: str, max_lines: 
             tokens = {w.lower() for w in re.findall(r"\w+", sent)}
             if tokens & question_terms:
                 chunk_picks.append(sent)
-                # also pull a following price sentence if present
+                                                                 
                 if idx + 1 < len(sentences):
                     nxt = sentences[idx + 1]
                     if re.search(r"\bprice\b|\$\d+|rub", nxt, re.IGNORECASE):
@@ -234,7 +234,7 @@ def _format_delivery_answer(hits: List[Tuple[dict, float]], query: str) -> str:
                 lines.append("Processing starts after documents arrive at our Moscow office.")
                 note_added = True
     if not lines:
-        # fallback: use first chunk text trimmed
+                                                
         return hits[0][0].get("text", "")[:300]
     if not note_added:
         lines.append("Processing starts after we receive your documents.")
@@ -427,7 +427,7 @@ def _llm_answer(
 
     user_content = "\n".join(user_msg_lines)
     try:
-        # Support openai>=1.0
+                             
         from openai import OpenAI
 
         client = OpenAI(api_key=api_key)
@@ -461,7 +461,7 @@ def _llm_answer(
 
 
 def _parse_sources_line(text: str, available_ids: set[str]) -> tuple[bool, set[str]]:
-    # Deprecated; kept for backward compatibility if imported elsewhere.
+                                                                        
     return False, set()
 
 
@@ -594,7 +594,7 @@ def _select_evidence(
         if apo_filtered:
             selected = apo_filtered[:2]
 
-    # Deduplicate by doc and text signature
+                                           
     deduped = []
     seen = set()
     for c, s in selected:
@@ -665,7 +665,7 @@ def answer_question(
         try:
             append_routing_event(
                 {
-                    "timestamp": None,  # filled in helper
+                    "timestamp": None,                    
                     "question": question,
                     "router_backend": router_backend,
                     "selected_backend_used": info.get("router_backend"),
@@ -682,7 +682,7 @@ def answer_question(
                 },
                 routing_log,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:                
             if debug:
                 logger.warning("routing_log_append_failed: %s", exc)
     info["backend"] = getattr(embed_model, "backend", "unknown")
@@ -805,7 +805,7 @@ def answer_question(
             if raw_answer and valid:
                 answer_text = raw_answer
                 llm_backend_used = True
-        else:  # grounding none
+        else:                  
             if raw_answer:
                 answer_text = raw_answer
                 llm_backend_used = True

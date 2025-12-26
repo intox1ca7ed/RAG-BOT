@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 from typing import List
 
-# Ensure repo root is on sys.path for local execution without installation
+                                                                          
 REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -22,8 +22,8 @@ from rag_core.manifest import load_manifest
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger("build_index")
 
-# NOTE: Embeddings tuning: supports backend auto/local/tfidf with optional sentence-transformers model.
-# Writes metadata used for downstream routing/refusal/debug; chunk ordering matches embeddings.npy/vectors.npy.
+                                                                                                       
+                                                                                                               
 
 def write_chunks_jsonl(chunks: List[dict], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -75,7 +75,7 @@ def main() -> None:
 
     logger.info("Loading manifest from %s", cfg.manifest_csv)
     records = load_manifest(cfg)
-    # Post-process topics to disambiguate furniture tour vs customs duties
+                                                                          
     renamed = 0
     for rec in records:
         title = str(rec.get("title", "")).lower()

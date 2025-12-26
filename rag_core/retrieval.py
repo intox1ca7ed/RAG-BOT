@@ -15,11 +15,11 @@ from .reranker import Reranker
 
 logger = logging.getLogger(__name__)
 
-# NOTE: Routing rewrite for stability: intent detection (contact/form), tag/country-aware
-# doc filtering, hierarchical doc shortlist + chunk scoring, and clearer debug signals to
-# avoid keyword traps (e.g., furniture vs contacts) while keeping deterministic behavior.
+                                                                                         
+                                                                                         
+                                                                                         
 
-# Retrieval tuning constants
+                            
 DOC_SHORTLIST = 8
 MIN_FILTERED_CANDIDATES = 10
 STRICT_FILTER_CONFIDENCE = 0.8
@@ -192,7 +192,7 @@ def _detect_allowed_tags(question: str) -> tuple[set[str], float]:
     if any(term in q for term in FURNITURE_TERMS) and not any(term in q for term in CUSTOMS_TERMS):
         allowed.discard("customs_duties")
     if time_terms:
-        confidence = min(confidence, 0.6)  # avoid over-strict tag gating for timing questions
+        confidence = min(confidence, 0.6)                                                     
     return allowed, confidence
 
 
@@ -537,7 +537,7 @@ def llm_route(
                     backend="llm",
                     rationale=rationale,
                 )
-        # retry once if parse failed
+                                    
         user_msg = user_msg + "\nReturn only JSON."
     return None
 
@@ -558,18 +558,18 @@ def _doc_matches_filters(
     prefer_china_default: bool,
 ) -> bool:
     if prefer_china_default:
-        # If we defaulted to China, exclude docs explicitly tagged with other countries.
+                                                                                        
         if ("japan" in countries or "taiwan" in countries) or ("japan" in tags or "taiwan" in tags):
             return False
-        # Allow China or country-unknown docs.
+                                              
     if not allowed_tags:
         return True
     if allowed_conf >= STRICT_FILTER_CONFIDENCE:
-        # strict: require intersection
+                                      
         if countries and allowed_tags & countries:
             return True
         return bool(allowed_tags & tags)
-    # permissive
+                
     if not tags:
         return True
     return bool(allowed_tags & tags) or bool(allowed_tags & countries)
@@ -771,7 +771,7 @@ def retrieve(
     intent_rule = router_result.rule
     prefer_china_default = router_result.prefer_china_default
     if "visa" in allowed_tags and not ({"china", "japan", "taiwan"} & allowed_tags):
-        # Ensure china default also applied to llm routing results
+                                                                  
         allowed_tags.add("china")
         prefer_china_default = True
         allowed_conf = max(allowed_conf, 0.8)
@@ -787,7 +787,7 @@ def retrieve(
     if intent == "contact" and intent_conf >= STRICT_FILTER_CONFIDENCE:
         allowed_tags = {"contact", "locations", "hours"}
         allowed_conf = 1.0
-    # Processing-time intent country restriction
+                                                
     processing_country: str | None = None
     q_lower = question.lower()
     entry_conditions = intent == "visa_requirement" and _is_entry_conditions_query(q_lower)
@@ -838,7 +838,7 @@ def retrieve(
             exclusions.append(f"{doc_id}: excluded (contact strict not a contact doc)")
 
     query_vec = embed_model.encode([question])[0]
-    # Defensive normalization in case upstream backend changes
+                                                              
     norm = np.linalg.norm(query_vec)
     if norm == 0:
         norm = 1.0
@@ -877,10 +877,10 @@ def retrieve(
         and len(filtered_doc_ids) < MIN_FILTERED_CANDIDATES
         and allowed_conf < STRICT_FILTER_CONFIDENCE
     ):
-        filter_warning = True  # not enough docs; we'll fallback to all docs
+        filter_warning = True                                               
         fallback_used = True
         fallback_reasons.append("doc filter broadened (insufficient candidates)")
-        # Re-run without tag filter but keep intent boosts
+                                                          
         doc_scores, doc_indices, filtered_doc_ids = _score_documents(
             question,
             query_vec,
@@ -904,7 +904,7 @@ def retrieve(
         )
 
     if not doc_scores and allow_filter_fallback:
-        # final fallback: unfiltered doc list
+                                             
         fallback_used = True
         fallback_reasons.append("doc filter removed (no candidates)")
         doc_scores, doc_indices, filtered_doc_ids = _score_documents(
@@ -980,7 +980,7 @@ def retrieve(
                 return False
         return True
 
-    # Gather chunk scores inside shortlisted docs
+                                                 
     vectors = index_store.vectors
     chunks = index_store.chunks
     chunk_hits: list[tuple[dict, float]] = []
@@ -1023,7 +1023,7 @@ def retrieve(
                 )
 
     chunk_hits.sort(key=lambda x: x[1], reverse=True)
-    # Post-filter chunks to enforce country/topic constraints and limit context size
+                                                                                    
     filtered_hits = [(c, s) for c, s in chunk_hits if _chunk_allowed(c.get("metadata", {}))]
     if intent == "cargo_delivery" and not filtered_hits:
         cargo_terms = ["cargo", "container", "containers", "shipping", "delivery"]
@@ -1068,7 +1068,7 @@ def retrieve(
                     meta["rerank_score"] = rr_score
                     scored.append((chunk, rr_score))
                 reranked = sorted(scored, key=lambda x: x[1], reverse=True)
-                # compute movement
+                                  
                 orig_order = [c.get("metadata", {}).get("chunk_id") for c, _ in candidates]
                 new_order = [c.get("metadata", {}).get("chunk_id") for c, _ in reranked]
                 rerank_changed = sum(1 for a, b in zip(orig_order, new_order) if a != b)
@@ -1076,7 +1076,7 @@ def retrieve(
                     f"{c.get('metadata',{}).get('doc_id')} emb={c.get('metadata',{}).get('embedding_score',0):.3f} rr={s:.3f} {c.get('text','')[:60].replace(chr(10),' ')}"
                     for c, s in reranked[:5]
                 ]
-                # append remainder unchanged
+                                            
                 filtered_hits = reranked + filtered_hits[top_n:]
     processing_chunk_matches: list[str] = []
     if processing_focus:
@@ -1110,7 +1110,7 @@ def retrieve(
             fallback_used = True
             fallback_reasons.append("processing chunk filter relaxed (no keyword matches)")
     if processing_focus and processing_country and not filtered_hits:
-        # fallback to original shortlist if filter was too strict
+                                                                 
         filter_warning = True
         fallback_used = True
         fallback_reasons.append("processing country filter relaxed (no chunks)")

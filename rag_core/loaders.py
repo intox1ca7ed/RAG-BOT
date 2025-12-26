@@ -19,7 +19,7 @@ def _resolve_path(local_path: str, config: Config) -> Path:
         return path
 
     candidate = path
-    # If the path already includes the corpus root name, strip it before joining.
+                                                                                 
     if candidate.parts and candidate.parts[0] == config.corpus_root.name:
         candidate = Path(*candidate.parts[1:])
     resolved = (config.corpus_root / candidate).resolve()
@@ -47,7 +47,7 @@ def _warn_replacements(text: str, path: Path) -> None:
     repl_count = text.count("\ufffd")
     if repl_count == 0:
         return
-    # Warn only when replacement characters appear frequently enough to risk hurting retrieval.
+                                                                                               
     ratio = repl_count / max(len(text), 1)
     if repl_count >= 5 or ratio > 0.001:
         logger.warning(

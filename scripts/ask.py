@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Ensure repo root is on sys.path for local execution without installation
+                                                                          
 REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -18,9 +18,9 @@ from rag_core.embeddings import EmbeddingMetadata
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
-# NOTE: Routing/refusal tuning pass: add debug flag, optional index rebuild on sklearn mismatch,
-# and richer routing diagnostics printing allowed tags, filters, and scores so answers are
-# explainable and consistent across runs.
+                                                                                                
+                                                                                          
+                                         
 
 
 def parse_args() -> argparse.Namespace:
@@ -171,7 +171,7 @@ def _rebuild_index(args: argparse.Namespace) -> bool:
         sys.stdout.write(result.stdout)
         sys.stderr.write(result.stderr)
         return True
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:                
         logging.error("Failed to rebuild index: %s", exc)
         return False
 
@@ -327,11 +327,11 @@ def main() -> None:
         for line in result["context_lines"]:
             _safe_print(line)
 
-# Sanity checks (expected behaviour):
-# python scripts/ask.py --question "Do I need visa if I stay 20 days in China?" --show_context --no_llm
-#   -> Allowed tags: china, visa; filtered retrieval preferred; answer should mention 30-day visa-free window or handoff if uncertain.
-# python scripts/ask.py --question "What's your wechat contact?" --show_context --no_llm
-#   -> Allowed tags: none; unfiltered; answer should surface WeChat contact details from contacts/FAQ docs.
+                                     
+                                                                                                       
+                                                                                                                                      
+                                                                                        
+                                                                                                           
 
 
 if __name__ == "__main__":

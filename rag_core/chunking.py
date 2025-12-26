@@ -3,8 +3,8 @@ from __future__ import annotations
 import re
 from typing import Iterable, List
 
-# NOTE: Chunking now respects Q&A detection, per-row CSV chunks with doc context, and paragraph-first
-# splitting to keep intents coherent for routing/hierarchical retrieval.
+                                                                                                     
+                                                                        
 
 def _split_long_text(text: str, chunk_size: int, chunk_overlap: int) -> List[str]:
     parts = []
@@ -56,7 +56,7 @@ def _chunk_qna(content: str, base_metadata: dict) -> list[dict]:
     pattern = re.compile(r"(?im)^question\s*\d+\s*:", re.MULTILINE)
     matches = list(pattern.finditer(content))
     if not matches:
-        return _chunk_paragraphs(content, base_metadata, 10_000, 0)  # fallback to single chunk
+        return _chunk_paragraphs(content, base_metadata, 10_000, 0)                            
 
     chunks = []
     positions = [m.start() for m in matches] + [len(content)]

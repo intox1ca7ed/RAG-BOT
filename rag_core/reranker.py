@@ -37,7 +37,7 @@ class Reranker:
             return
         try:
             self.model = CrossEncoder(model_name, device=self.device)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:                
             logger.warning("Failed to load reranker model %s: %s", model_name, exc)
             self.model = None
 

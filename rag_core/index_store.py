@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def _try_import_faiss():
     try:
-        import faiss  # type: ignore
+        import faiss                
 
         return faiss
     except Exception:
@@ -24,7 +24,7 @@ def _try_import_faiss():
 
 def _get_sklearn_version() -> str | None:
     try:
-        import sklearn  # type: ignore
+        import sklearn                
 
         return sklearn.__version__
     except Exception:
@@ -183,7 +183,7 @@ class IndexStore:
                 hits.append((self.chunks[idx], float(score)))
             return hits
 
-        # numpy cosine similarity
+                                 
         vectors = self.vectors
         denom = np.linalg.norm(vectors, axis=1) * np.linalg.norm(query_vector, axis=1)
         denom[denom == 0] = 1.0

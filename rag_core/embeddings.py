@@ -17,7 +17,7 @@ def _try_import_sentence_transformers():
         from sentence_transformers import SentenceTransformer
 
         return SentenceTransformer
-    except Exception:  # ImportError or other runtime issues
+    except Exception:                                       
         return None
 
 
@@ -73,7 +73,7 @@ class EmbeddingModel:
         if self.backend == "tfidf" and self.vectorizer is not None:
             vectors = self.vectorizer.fit_transform(texts_list).toarray()
             return self._normalize(vectors)
-        # simple backend
+                        
         self._simple_vocab = self._build_simple_vocab(texts_list)
         return self._simple_encode(texts_list)
 
@@ -104,7 +104,7 @@ class EmbeddingModel:
         return vocab
 
     def _simple_encode(self, texts: List[str]) -> np.ndarray:
-        # Keep vocab fixed between fit/encode to avoid dimension mismatch.
+                                                                          
         vocab = self._simple_vocab or {}
         rows = np.zeros((len(texts), len(vocab)), dtype=np.float32)
         for i, text in enumerate(texts):
