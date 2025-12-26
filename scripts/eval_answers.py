@@ -40,6 +40,7 @@ class CaseResult:
     forbidden_hits: list[str]
     top_docs: list[str]
     router_backend_used: str
+    router_tags: list[str]
     confidence: float
     answer_text: str
     question: str
@@ -118,6 +119,9 @@ def _evaluate_case(
     track: str,
     cfg: Config,
     top_docs: int,
+    router_backend_override: str | None = None,
+    use_llm_override: bool | None = None,
+    top_k_override: int | None = None,
 ) -> CaseResult:
     question = case["question"]
     expected_intent = case["expected_intent"]
@@ -127,8 +131,32 @@ def _evaluate_case(
 
     api_key = os.getenv("OPENAI_API_KEY")
     use_llm = False
-    if track == "demo":
-        use_llm = case.get("mode") == "llm"
+    if use_llm_override is None:
+        if track == "demo":
+            use_llm = case.get("mode") == "llm"
+            if use_llm and not api_key:
+                return CaseResult(
+                    case_id=case["id"],
+                    track=track,
+                    status="skipped",
+                    intent_expected=expected_intent,
+                    intent_predicted="",
+                    intent_ok=False,
+                    retrieval_ok=False,
+                    content_ok=False,
+                    missing_includes=[],
+                    forbidden_hits=[],
+                    top_docs=[],
+                    router_backend_used="",
+                    router_tags=[],
+                    confidence=0.0,
+                    answer_text="",
+                    question=question,
+                )
+        if track == "baseline":
+            use_llm = False
+    else:
+        use_llm = use_llm_override
         if use_llm and not api_key:
             return CaseResult(
                 case_id=case["id"],
@@ -143,18 +171,17 @@ def _evaluate_case(
                 forbidden_hits=[],
                 top_docs=[],
                 router_backend_used="",
+                router_tags=[],
                 confidence=0.0,
                 answer_text="",
                 question=question,
             )
 
-    if track == "baseline":
-        use_llm = False
-
-    router_backend = "rules" if track == "baseline" else "auto"
+    router_backend = router_backend_override or ("rules" if track == "baseline" else "auto")
     try:
         result = answer_question(
             question=question,
+            top_k=top_k_override,
             use_llm=use_llm,
             show_context=False,
             config=cfg,
@@ -177,6 +204,7 @@ def _evaluate_case(
                 forbidden_hits=[],
                 top_docs=[],
                 router_backend_used="",
+                router_tags=[],
                 confidence=0.0,
                 answer_text="",
                 question=question,
@@ -211,6 +239,7 @@ def _evaluate_case(
         forbidden_hits=forbidden,
         top_docs=top_doc_ids,
         router_backend_used=info.get("router_backend", ""),
+        router_tags=list(info.get("allowed_tags") or []),
         confidence=float(info.get("intent_confidence", 0.0) or 0.0),
         answer_text=answer_text,
         question=question,
@@ -239,6 +268,9 @@ def run_eval(
     report_txt: Path,
     top_docs: int = 5,
     limit: int | None = None,
+    router_backend: str | None = None,
+    use_llm: bool | None = None,
+    top_k: int | None = None,
 ) -> dict[str, Any]:
     cases = load_cases(cases_file)
     if limit is not None:
@@ -248,7 +280,18 @@ def run_eval(
     tracks = [track] if track != "both" else ["baseline", "demo"]
     all_results: dict[str, list[CaseResult]] = {}
     for tr in tracks:
-        results = [_evaluate_case(case, tr, cfg, top_docs) for case in cases]
+        results = [
+            _evaluate_case(
+                case,
+                tr,
+                cfg,
+                top_docs,
+                router_backend_override=router_backend,
+                use_llm_override=use_llm,
+                top_k_override=top_k,
+            )
+            for case in cases
+        ]
         all_results[tr] = results
 
     report = {
@@ -309,6 +352,29 @@ def run_eval(
 
     report_txt_path.write_text("\n".join(lines), encoding="utf-8")
     return report
+
+
+def evaluate_cases(
+    cases: list[dict[str, Any]],
+    cfg: Config,
+    router_backend: str,
+    use_llm: bool,
+    top_docs: int = 5,
+    top_k: int | None = None,
+    track_label: str = "custom",
+) -> list[CaseResult]:
+    return [
+        _evaluate_case(
+            case,
+            track_label,
+            cfg,
+            top_docs,
+            router_backend_override=router_backend,
+            use_llm_override=use_llm,
+            top_k_override=top_k,
+        )
+        for case in cases
+    ]
 
 
 def main() -> None:
